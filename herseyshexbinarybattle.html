@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hersey's Hex ↔ Binary Battle</title>
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #0f172a, #1e3a5f);
+color: white;
+min-height: 100vh;
+padding: 15px;
+}
+
+.container {
+max-width: 900px;
+margin: auto;
+}
+
+.panel {
+background: #172033;
+border: 1px solid #334155;
+border-radius: 22px;
+padding: 25px;
+box-shadow: 0 15px 40px rgba(0,0,0,.4);
+}
+
+h1 {
+text-align: center;
+margin: 0 0 5px;
+font-size: clamp(30px, 7vw, 48px);
+}
+
+.subtitle {
+text-align: center;
+color: #94a3b8;
+margin-bottom: 25px;
+}
+
+.card {
+background: #202c40;
+border: 1px solid #3b4a61;
+border-radius: 16px;
+padding: 20px;
+margin-top: 15px;
+}
+
+.center {
+text-align: center;
+}
+
+.hidden {
+display: none;
+}
+
+.primary {
+background: #38bdf8;
+color: #062033;
+border: none;
+border-radius: 12px;
+padding: 14px 30px;
+font-size: 17px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 15px;
+}
+
+.primary:hover {
+filter: brightness(1.1);
+}
+
+.rules {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin: 20px 0;
+}
+
+.rule {
+background: #172033;
+border-radius: 12px;
+padding: 15px;
+}
+
+.rule strong {
+display: block;
+color: #38bdf8;
+font-size: 22px;
+margin-bottom: 7px;
+}
+
+.stats {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+}
+
+.stat {
+text-align: center;
+margin: 0;
+}
+
+.stat span {
+display: block;
+color: #94a3b8;
+font-size: 12px;
+text-transform: uppercase;
+}
+
+.stat strong {
+display: block;
+font-size: 25px;
+margin-top: 5px;
+}
+
+.timer-header {
+display: flex;
+justify-content: space-between;
+}
+
+.timer-bar {
+height: 12px;
+background: #334155;
+border-radius: 20px;
+overflow: hidden;
+margin-top: 8px;
+}
+
+.timer-fill {
+height: 100%;
+background: #38bdf8;
+width: 100%;
+}
+
+.stage {
+color: #94a3b8;
+font-weight: bold;
+font-size: 14px;
+text-transform: uppercase;
+}
+
+.question-type {
+font-size: 20px;
+font-weight: bold;
+margin-top: 12px;
+}
+
+.question-value {
+font-family: Consolas, monospace;
+font-size: clamp(40px, 12vw, 70px);
+font-weight: bold;
+letter-spacing: 5px;
+margin: 20px 0;
+}
+
+.question-text {
+color: #cbd5e1;
+}
+
+.choices {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+margin-top: 20px;
+}
+
+.choice {
+background: #172033;
+color: white;
+border: 2px solid #475569;
+border-radius: 12px;
+padding: 18px 8px;
+font-family: Consolas, monospace;
+font-size: clamp(18px, 5vw, 25px);
+font-weight: bold;
+cursor: pointer;
+}
+
+.choice:hover {
+background: #26364e;
+border-color: #38bdf8;
+}
+
+.choice:disabled {
+cursor: default;
+}
+
+.choice.correct {
+background: #14532d;
+border-color: #4ade80;
+}
+
+.choice.wrong {
+background: #7f1d1d;
+border-color: #f87171;
+}
+
+.feedback {
+min-height: 65px;
+margin-top: 18px;
+font-size: 16px;
+line-height: 1.5;
+font-weight: bold;
+}
+
+.final-score {
+font-size: 60px;
+font-weight: bold;
+color: #38bdf8;
+}
+
+.final-percent {
+font-size: 28px;
+font-weight: bold;
+}
+
+.final-message {
+color: #cbd5e1;
+margin: 15px 0;
+}
+
+.example {
+font-family: Consolas, monospace;
+font-size: 20px;
+color: #38bdf8;
+}
+
+@media (max-width: 600px) {
+
+body {
+padding: 8px;
+}
+
+.panel {
+padding: 15px;
+}
+
+.stats {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.rules {
+grid-template-columns: 1fr;
+}
+
+.choices {
+grid-template-columns: 1fr;
+}
+
+.question-value {
+letter-spacing: 3px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="panel">
+
+<!-- START SCREEN -->
+
+<section id="startScreen">
+
+<h1>⚡ Hersey's Hex ↔ Binary Battle</h1>
+
+<p class="subtitle">
+GCSE Computer Science • Number Systems
+</p>
+
+<div class="card center">
+
+<h2>Can you convert between Hex and Binary?</h2>
+
+<p>
+Every question uses exactly <strong>1 byte</strong>.
+</p>
+
+<p class="example">
+1 byte = 8 bits = 2 hexadecimal digits
+</p>
+
+<div class="rules">
+
+<div class="rule">
+<strong>🟦 BINARY</strong>
+Always exactly 8 bits.
+</div>
+
+<div class="rule">
+<strong>🔢 HEX</strong>
+Always exactly 2 hex digits.
+</div>
+
+<div class="rule">
+<strong>🔄 CONVERT</strong>
+Each hex digit represents 4 bits.
+</div>
+
+</div>
+
+<p style="color:#94a3b8">
+30 questions • Starts at 8 seconds • Gets faster • Instant feedback
+</p>
+
+<h3>Choose difficulty</h3>
+
+<div style="
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
+">
+
+<button class="primary" onclick="startGame('easy')">
+Easy
+</button>
+
+<button class="primary" onclick="startGame('medium')">
+Medium
+</button>
+
+<button class="primary" onclick="startGame('hard')">
+Hard
+</button>
+
+</div>
+
+</div>
+
+<div class="card center">
+
+<strong>Key fact</strong>
+
+<p class="question-text">
+One hexadecimal digit represents exactly four binary bits.
+</p>
+
+<p class="example">
+A = 1010 &nbsp; • &nbsp; F = 1111
+</p>
+
+</div>
+
+</section>
+
+
+<!-- GAME SCREEN -->
+
+<section id="gameScreen" class="hidden">
+
+<h1>⚡ Hersey's Hex ↔ Binary Battle</h1>
+
+<p class="subtitle">
+1 BYTE = 8 BITS = 2 HEX DIGITS
+</p>
+
+<div class="stats">
+
+<div class="card stat">
+<span>Score</span>
+<strong id="score">0</strong>
+</div>
+
+<div class="card stat">
+<span>Question</span>
+<strong id="questionNumber">1 / 30</strong>
+</div>
+
+<div class="card stat">
+<span>Time</span>
+<strong id="time">8.0s</strong>
+</div>
+
+<div class="card stat">
+<span>Correct</span>
+<strong id="correct">0</strong>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="timer-header">
+
+<strong>TIME</strong>
+
+<span id="timerText">
+8.0s
+</span>
+
+</div>
+
+<div class="timer-bar">
+
+<div id="timerFill" class="timer-fill"></div>
+
+</div>
+
+</div>
+
+
+<div class="card center">
+
+<div id="stage" class="stage">
+Stage 1 — Warm Up
+</div>
+
+<div id="questionType" class="question-type">
+HEX → BINARY
+</div>
+
+<p class="question-text">
+What is the correct conversion?
+</p>
+
+<div id="questionValue" class="question-value">
+3A
+</div>
+
+<div id="choices" class="choices"></div>
+
+<div id="feedback" class="feedback"></div>
+
+</div>
+
+</section>
+
+
+<!-- END SCREEN -->
+
+<section id="endScreen" class="hidden">
+
+<div class="card center">
+
+<h1>🏆 Game Complete!</h1>
+
+<p class="question-text">
+Final Score
+</p>
+
+<div id="finalScore" class="final-score">
+0
+</div>
+
+<div id="finalPercent" class="final-percent">
+0%
+</div>
+
+<p id="finalStats"></p>
+
+<p id="finalMessage" class="final-message"></p>
+
+<button class="primary"
+onclick="startGame(currentDifficulty)">
+Play Again
+</button>
+
+</div>
+
+</section>
+
+</div>
+</div>
+
+
+<script>
+
+let question = 1;
+let score = 0;
+let correct = 0;
+
+let locked = false;
+let timer;
+
+let totalTime;
+let remaining;
+
+let currentQuestion;
+
+let currentDifficulty = "easy";
+
+
+function $(id) {
+return document.getElementById(id);
+}
+
+
+/* RANDOM NUMBER */
+
+function random(min, max) {
+
+return Math.floor(
+Math.random() * (max - min + 1)
+) + min;
+
+}
+
+
+/* NUMBER → 8-BIT BINARY */
+
+function toBinary8(number) {
+
+return number
+.toString(2)
+.padStart(8, "0");
+
+}
+
+
+/* NUMBER → TWO-DIGIT HEX */
+
+function toHex2(number) {
+
+return number
+.toString(16)
+.toUpperCase()
+.padStart(2, "0");
+
+}
+
+
+/* TIME GETS FASTER */
+
+function getTime() {
+
+if (question <= 5) {
+return 8;
+}
+
+if (question <= 10) {
+return 7;
+}
+
+if (question <= 15) {
+return 6;
+}
+
+if (question <= 20) {
+return 5;
+}
+
+return 4;
+
+}
+
+
+/* CREATE QUESTION */
+
+function createQuestion() {
+
+let value = random(0, 255);
+
+let direction;
+
+if (question <= 10) {
+
+direction =
+Math.random() < 0.5
+? "hexToBinary"
+: "binaryToHex";
+
+}
+
+else if (question <= 20) {
+
+direction =
+Math.random() < 0.5
+? "hexToBinary"
+: "binaryToHex";
+
+}
+
+else {
+
+direction =
+Math.random() < 0.5
+? "hexToBinary"
+: "binaryToHex";
+
+}
+
+
+return {
+
+value: value,
+
+direction: direction,
+
+hex: toHex2(value),
+
+binary: toBinary8(value)
+
+};
+
+}
+
+
+/* CREATE MULTIPLE CHOICE ANSWERS */
+
+function createChoices(correctAnswer, direction) {
+
+let answers = new Set();
+
+answers.add(correctAnswer);
+
+
+if (direction === "hexToBinary") {
+
+let number =
+parseInt(correctAnswer, 2);
+
+answers.add(
+toBinary8(number ^ 1)
+);
+
+answers.add(
+toBinary8(number ^ 2)
+);
+
+answers.add(
+toBinary8(number ^ 8)
+);
+
+answers.add(
+toBinary8(number ^ 16)
+);
+
+}
+
+else {
+
+let number =
+parseInt(correctAnswer, 16);
+
+answers.add(
+toHex2(number ^ 1)
+);
+
+answers.add(
+toHex2(number ^ 2)
+);
+
+answers.add(
+toHex2(number ^ 16)
+);
+
+answers.add(
+toHex2(number ^ 32)
+);
+
+}
+
+
+while (answers.size < 4) {
+
+let value =
+random(0, 255);
+
+answers.add(
+
+direction === "hexToBinary"
+
+? toBinary8(value)
+
+: toHex2(value)
+
+);
+
+}
+
+
+return [...answers]
+.slice(0, 4)
+.sort(() => Math.random() - 0.5);
+
+}
+
+
+/* START GAME */
+
+function startGame(difficulty) {
+
+clearInterval(timer);
+
+currentDifficulty =
+difficulty || "easy";
+
+question = 1;
+score = 0;
+correct = 0;
+
+$("startScreen")
+.classList
+.add("hidden");
+
+$("endScreen")
+.classList
+.add("hidden");
+
+$("gameScreen")
+.classList
+.remove("hidden");
+
+$("score").textContent = "0";
+
+$("correct").textContent = "0";
+
+nextQuestion();
+
+}
+
+
+/* NEXT QUESTION */
+
+function nextQuestion() {
+
+if (question > 30) {
+
+endGame();
+
+return;
+
+}
+
+
+currentQuestion =
+createQuestion();
+
+
+totalTime =
+getTime();
+
+remaining =
+totalTime;
+
+locked = false;
+
+
+$("questionNumber")
+.textContent =
+question + " / 30";
+
+
+$("questionValue")
+.textContent =
+
+currentQuestion.direction === "hexToBinary"
+
+? currentQuestion.hex
+
+: currentQuestion.binary;
+
+
+$("questionType")
+.textContent =
+
+currentQuestion.direction === "hexToBinary"
+
+? "🔢 HEX → BINARY"
+
+: "🟦 BINARY → HEX";
+
+
+if (question <= 10) {
+
+$("stage")
+.textContent =
+"Stage 1 — Warm Up";
+
+}
+
+else if (question <= 20) {
+
+$("stage")
+.textContent =
+"Stage 2 — Intermediate";
+
+}
+
+else {
+
+$("stage")
+.textContent =
+"Stage 3 — GCSE Challenge";
+
+}
+
+
+$("feedback").textContent = "";
+
+
+let choices =
+$("choices");
+
+choices.innerHTML = "";
+
+
+let correctAnswer =
+
+currentQuestion.direction === "hexToBinary"
+
+? currentQuestion.binary
+
+: currentQuestion.hex;
+
+
+let answers =
+
+createChoices(
+correctAnswer,
+currentQuestion.direction
+);
+
+
+answers.forEach(answer => {
+
+let button =
+document.createElement("button");
+
+button.className = "choice";
+
+button.textContent = answer;
+
+button.onclick = function() {
+
+selectAnswer(
+answer,
+button
+);
+
+};
+
+choices.appendChild(button);
+
+});
+
+
+updateTimer();
+
+
+clearInterval(timer);
+
+
+timer = setInterval(function() {
+
+remaining -= 0.1;
+
+updateTimer();
+
+
+if (remaining <= 0) {
+
+clearInterval(timer);
+
+timeUp();
+
+}
+
+}, 100);
+
+}
+
+
+/* UPDATE TIMER */
+
+function updateTimer() {
+
+let display =
+Math.max(0, remaining);
+
+
+$("time")
+.textContent =
+display.toFixed(1) + "s";
+
+
+$("timerText")
+.textContent =
+display.toFixed(1) + "s";
+
+
+$("timerFill")
+.style
+.width =
+(display / totalTime * 100) + "%";
+
+}
+
+
+/* CORRECT ANSWER */
+
+function getCorrectAnswer() {
+
+return currentQuestion.direction === "hexToBinary"
+
+? currentQuestion.binary
+
+: currentQuestion.hex;
+
+}
+
+
+/* EXPLANATION */
+
+function getExplanation() {
+
+if (
+currentQuestion.direction ===
+"hexToBinary"
+) {
+
+let hex =
+currentQuestion.hex;
+
+let binary =
+currentQuestion.binary;
+
+
+let first =
+parseInt(hex[0], 16)
+.toString(2)
+.padStart(4, "0");
+
+
+let second =
+parseInt(hex[1], 16)
+.toString(2)
+.padStart(4, "0");
+
+
+return (
+
+hex +
+" → " +
+first +
+" " +
+second +
+" → " +
+binary
+
+);
+
+}
+
+else {
+
+let binary =
+currentQuestion.binary;
+
+
+let first =
+binary.substring(0, 4);
+
+
+let second =
+binary.substring(4, 8);
+
+
+let hex1 =
+parseInt(first, 2)
+.toString(16)
+.toUpperCase();
+
+
+let hex2 =
+parseInt(second, 2)
+.toString(16)
+.toUpperCase();
+
+
+return (
+
+binary +
+" → " +
+first +
+" " +
+second +
+" → " +
+hex1 +
+hex2
+
+);
+
+}
+
+}
+
+
+/* ANSWER SELECTED */
+
+function selectAnswer(value, button) {
+
+if (locked) {
+return;
+}
+
+
+locked = true;
+
+clearInterval(timer);
+
+
+document
+.querySelectorAll(".choice")
+.forEach(function(btn) {
+
+btn.disabled = true;
+
+});
+
+
+let correctAnswer =
+getCorrectAnswer();
+
+
+if (value === correctAnswer) {
+
+correct++;
+
+
+let speedBonus =
+Math.ceil(remaining);
+
+
+let points =
+10 + speedBonus;
+
+
+if (currentDifficulty === "medium") {
+
+points *= 2;
+
+}
+
+
+if (currentDifficulty === "hard") {
+
+points *= 3;
+
+}
+
+
+score += points;
+
+
+button.classList.add("correct");
+
+
+$("feedback").innerHTML =
+
+"✅ Correct! <b>+" +
+points +
+" points</b><br>" +
+
+getExplanation();
+
+}
+
+else {
+
+button.classList.add("wrong");
+
+
+document
+.querySelectorAll(".choice")
+.forEach(function(btn) {
+
+if (
+btn.textContent ===
+correctAnswer
+) {
+
+btn.classList.add("correct");
+
+}
+
+});
+
+
+$("feedback").innerHTML =
+
+"❌ Not quite.<br>" +
+
+"The correct answer is <b>" +
+correctAnswer +
+"</b><br>" +
+
+getExplanation();
+
+}
+
+
+$("score")
+.textContent =
+score;
+
+
+$("correct")
+.textContent =
+correct;
+
+
+setTimeout(function() {
+
+question++;
+
+nextQuestion();
+
+}, 1400);
+
+}
+
+
+/* TIME UP */
+
+function timeUp() {
+
+if (locked) {
+return;
+}
+
+
+locked = true;
+
+
+let correctAnswer =
+getCorrectAnswer();
+
+
+document
+.querySelectorAll(".choice")
+.forEach(function(btn) {
+
+btn.disabled = true;
+
+
+if (
+btn.textContent ===
+correctAnswer
+) {
+
+btn.classList.add("correct");
+
+}
+
+});
+
+
+$("feedback").innerHTML =
+
+"⏰ Time's up!<br>" +
+
+"The correct answer is <b>" +
+correctAnswer +
+"</b><br>" +
+
+getExplanation();
+
+
+setTimeout(function() {
+
+question++;
+
+nextQuestion();
+
+}, 1600);
+
+}
+
+
+/* END GAME */
+
+function endGame() {
+
+clearInterval(timer);
+
+
+$("gameScreen")
+.classList
+.add("hidden");
+
+
+$("endScreen")
+.classList
+.remove("hidden");
+
+
+let percentage =
+Math.round(
+correct / 30 * 100
+);
+
+
+$("finalScore")
+.textContent =
+score;
+
+
+$("finalPercent")
+.textContent =
+percentage + "%";
+
+
+$("finalStats")
+.textContent =
+correct +
+" correct out of 30";
+
+
+let message;
+
+
+if (percentage >= 90) {
+
+message =
+"Excellent hexadecimal and binary conversion! 🔥";
+
+}
+
+else if (percentage >= 75) {
+
+message =
+"Very good work — keep practising!";
+
+}
+
+else if (percentage >= 60) {
+
+message =
+"Good effort — remember that each hex digit represents four bits.";
+
+}
+
+else {
+
+message =
+"Keep practising the 4-bit groups and try again!";
+
+}
+
+
+let storageKey =
+"hexBinaryBest_" +
+currentDifficulty;
+
+
+let oldBest =
+Number(
+localStorage.getItem(storageKey) || 0
+);
+
+
+if (score > oldBest) {
+
+localStorage.setItem(
+storageKey,
+score
+);
+
+message +=
+" 🏆 New high score!";
+
+}
+
+
+$("finalMessage")
+.textContent =
+message;
+
+}
+
+</script>
+
+</body>
+</html>

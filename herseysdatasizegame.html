@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hersey's data size game - GCSE Computer Science</title>
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: linear-gradient(135deg, #0f172a, #1e3a5f);
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px;
+color: #172033;
+}
+
+.game {
+width: 100%;
+max-width: 900px;
+background: white;
+border-radius: 24px;
+padding: 30px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+h1 {
+text-align: center;
+font-size: 42px;
+margin: 0 0 5px;
+}
+
+.subtitle {
+text-align: center;
+color: #64748b;
+margin-bottom: 25px;
+}
+
+.hidden {
+display: none !important;
+}
+
+/* START SCREEN */
+
+.start-screen {
+text-align: center;
+}
+
+.start-screen h2 {
+font-size: 30px;
+}
+
+.rules {
+background: #f1f5f9;
+border-radius: 16px;
+padding: 20px;
+text-align: left;
+margin: 25px 0;
+}
+
+.rules li {
+margin: 9px 0;
+}
+
+.difficulty {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin: 20px 0;
+flex-wrap: wrap;
+}
+
+.difficulty button {
+border: none;
+background: #e2e8f0;
+color: #334155;
+padding: 13px 25px;
+border-radius: 12px;
+font-size: 17px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.difficulty button.selected {
+background: #2563eb;
+color: white;
+}
+
+.start-button,
+.restart-button {
+border: none;
+background: #16a34a;
+color: white;
+padding: 15px 35px;
+border-radius: 12px;
+font-size: 18px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.start-button:hover,
+.restart-button:hover {
+background: #15803d;
+}
+
+/* STATS */
+
+.stats {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 12px;
+margin-bottom: 20px;
+}
+
+.stat {
+background: #f1f5f9;
+border-radius: 13px;
+padding: 12px;
+text-align: center;
+}
+
+.stat-label {
+font-size: 12px;
+color: #64748b;
+font-weight: bold;
+text-transform: uppercase;
+}
+
+.stat-value {
+font-size: 25px;
+font-weight: bold;
+margin-top: 5px;
+}
+
+/* TIMER */
+
+.timer-container {
+margin-bottom: 20px;
+}
+
+.timer-label {
+display: flex;
+justify-content: space-between;
+font-weight: bold;
+margin-bottom: 6px;
+}
+
+.timer-bar {
+height: 14px;
+background: #e2e8f0;
+border-radius: 20px;
+overflow: hidden;
+}
+
+.timer-fill {
+height: 100%;
+width: 100%;
+background: #22c55e;
+transition: width 0.1s linear;
+}
+
+/* QUESTION */
+
+.question-box {
+background: #f8fafc;
+border-radius: 20px;
+padding: 30px 20px;
+text-align: center;
+}
+
+.stage {
+color: #64748b;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.question {
+font-size: 32px;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.instruction {
+color: #64748b;
+margin-bottom: 25px;
+}
+
+.choices {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+}
+
+.choice {
+border: none;
+background: #2563eb;
+color: white;
+padding: 25px 15px;
+border-radius: 15px;
+font-size: 23px;
+font-weight: bold;
+cursor: pointer;
+transition: 0.15s;
+}
+
+.choice:hover {
+background: #1d4ed8;
+transform: translateY(-3px);
+}
+
+.choice:disabled {
+cursor: default;
+}
+
+.choice.correct {
+background: #16a34a !important;
+}
+
+.choice.wrong {
+background: #dc2626 !important;
+}
+
+.feedback {
+margin-top: 20px;
+padding: 15px;
+border-radius: 12px;
+font-weight: bold;
+min-height: 50px;
+}
+
+.feedback.good {
+background: #dcfce7;
+color: #166534;
+}
+
+.feedback.bad {
+background: #fee2e2;
+color: #991b1b;
+}
+
+.explanation {
+font-weight: normal;
+margin-top: 7px;
+}
+
+/* GAME OVER */
+
+.game-over {
+text-align: center;
+}
+
+.final-score {
+font-size: 70px;
+font-weight: bold;
+color: #2563eb;
+margin: 15px 0;
+}
+
+.percentage {
+font-size: 30px;
+font-weight: bold;
+}
+
+.result-message {
+font-size: 19px;
+margin: 20px 0 30px;
+}
+
+.breakdown {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 12px;
+margin: 25px 0;
+}
+
+.breakdown-box {
+background: #f1f5f9;
+padding: 15px;
+border-radius: 12px;
+}
+
+.breakdown-box strong {
+display: block;
+font-size: 25px;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+
+body {
+padding: 10px;
+}
+
+.game {
+padding: 18px;
+}
+
+h1 {
+font-size: 32px;
+}
+
+.stats {
+grid-template-columns: 1fr 1fr;
+}
+
+.question {
+font-size: 25px;
+}
+
+.choices {
+grid-template-columns: 1fr;
+}
+
+.choice {
+font-size: 20px;
+padding: 20px;
+}
+
+.breakdown {
+grid-template-columns: 1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<!-- ================= START SCREEN ================= -->
+
+<div id="startScreen" class="start-screen">
+
+<h1>Hersey's data size game. ⚡ </h1>
+
+<div class="subtitle">
+GCSE Computer Science Data Units Challenge
+</div>
+
+<h2>Can you survive all 30 questions?</h2>
+
+<div class="rules">
+
+<h3>What you need to know</h3>
+
+<ul>
+<li><strong>1 byte = 8 bits</strong></li>
+<li><strong>1 nibble = 4 bits</strong></li>
+<li><strong>1 KB = 1,000 bytes</strong></li>
+<li><strong>1 MB = 1,000 KB</strong></li>
+<li><strong>1 GB = 1,000 MB</strong></li>
+<li><strong>1 TB = 1,000 GB</strong></li>
+</ul>
+
+<h3>How the game works</h3>
+
+<ul>
+<li>You have <strong>30 questions</strong>.</li>
+<li>Choose which amount is larger.</li>
+<li>The questions become harder.</li>
+<li>The time available gets shorter.</li>
+<li>You earn more points for faster answers.</li>
+<li>Wrong answers do not end the game.</li>
+</ul>
+
+</div>
+
+<h3>Choose difficulty</h3>
+
+<div class="difficulty">
+
+<button
+class="difficulty-button selected"
+data-difficulty="easy">
+Easy
+</button>
+
+<button
+class="difficulty-button"
+data-difficulty="medium">
+Medium
+</button>
+
+<button
+class="difficulty-button"
+data-difficulty="hard">
+Hard
+</button>
+
+</div>
+
+<button
+class="start-button"
+onclick="startGame()">
+
+Start Byte Battle
+
+</button>
+
+</div>
+
+
+<!-- ================= GAME SCREEN ================= -->
+
+<div id="gameScreen" class="hidden">
+
+<h1>⚡ Byte Battle</h1>
+
+<div class="subtitle">
+Which amount is larger?
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-label">Score</div>
+<div
+class="stat-value"
+id="score">
+0
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">Question</div>
+<div
+class="stat-value"
+id="questionNumber">
+1 / 30
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">Time</div>
+<div
+class="stat-value"
+id="questionTime">
+8s
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">Best</div>
+<div
+class="stat-value"
+id="bestScore">
+0
+</div>
+</div>
+
+</div>
+
+
+<!-- TIMER -->
+
+<div class="timer-container">
+
+<div class="timer-label">
+
+<span>TIME REMAINING</span>
+
+<span id="timerText">
+8.0s
+</span>
+
+</div>
+
+<div class="timer-bar">
+
+<div
+id="timerFill"
+class="timer-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- QUESTION -->
+
+<div class="question-box">
+
+<div
+class="stage"
+id="stage">
+Stage 1 — Warm Up
+</div>
+
+<div class="question">
+Which is larger?
+</div>
+
+<div class="instruction">
+Click the larger amount
+</div>
+
+
+<div class="choices">
+
+<button
+id="choice1"
+class="choice"
+onclick="answer(0)">
+-
+</button>
+
+<button
+id="choice2"
+class="choice"
+onclick="answer(1)">
+-
+</button>
+
+</div>
+
+
+<div
+id="feedback"
+class="feedback">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= GAME OVER ================= -->
+
+<div
+id="gameOverScreen"
+class="game-over hidden">
+
+<h1>🏆 Byte Battle Complete!</h1>
+
+<div class="subtitle">
+You completed all 30 questions.
+</div>
+
+<div
+class="final-score"
+id="finalScore">
+0
+</div>
+
+<div
+class="percentage"
+id="percentage">
+0%
+</div>
+
+<div
+class="breakdown">
+
+<div class="breakdown-box">
+<strong id="correctAnswers">0</strong>
+Correct
+</div>
+
+<div class="breakdown-box">
+<strong id="wrongAnswers">0</strong>
+Incorrect
+</div>
+
+<div class="breakdown-box">
+<strong id="bestFinal">0</strong>
+Best Score
+</div>
+
+</div>
+
+<div
+class="result-message"
+id="finalMessage">
+</div>
+
+<button
+class="restart-button"
+onclick="restartGame()">
+
+Play Again
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+GAME VARIABLES
+===================================================== */
+
+let score = 0;
+
+let questionNumber = 1;
+
+const totalQuestions = 30;
+
+let correctAnswers = 0;
+
+let wrongAnswers = 0;
+
+let selectedDifficulty = "easy";
+
+let currentQuestion = null;
+
+let timer = null;
+
+let timeRemaining = 8;
+
+let questionTime = 8;
+
+let answerLocked = false;
+
+let bestScore =
+Number(localStorage.getItem("byteBattleBest")) || 0;
+
+document.getElementById("bestScore").textContent =
+bestScore;
+
+
+/* =====================================================
+DIFFICULTY BUTTONS
+===================================================== */
+
+document
+.querySelectorAll(".difficulty-button")
+.forEach(button => {
+
+button.addEventListener("click", () => {
+
+document
+.querySelectorAll(".difficulty-button")
+.forEach(b =>
+b.classList.remove("selected")
+);
+
+button.classList.add("selected");
+
+selectedDifficulty =
+button.dataset.difficulty;
+
+});
+
+});
+
+
+/* =====================================================
+DATA UNITS
+
+Everything is converted to BITS.
+
+1 byte = 8 bits
+1 nibble = 4 bits
+1 KB = 1000 bytes
+1 MB = 1000 KB
+1 GB = 1000 MB
+1 TB = 1000 GB
+===================================================== */
+
+const units = {
+
+bit: {
+name: "bits",
+bits: 1
+},
+
+nibble: {
+name: "nibbles",
+bits: 4
+},
+
+byte: {
+name: "bytes",
+bits: 8
+},
+
+KB: {
+name: "KB",
+bits: 8 * 1000
+},
+
+MB: {
+name: "MB",
+bits: 8 * 1000 * 1000
+},
+
+GB: {
+name: "GB",
+bits: 8 * 1000 * 1000 * 1000
+},
+
+TB: {
+name: "TB",
+bits: 8 * 1000 * 1000 * 1000 * 1000
+}
+
+};
+
+
+/* =====================================================
+TIME BY QUESTION
+
+Questions 1-5 = 8 seconds
+Questions 6-10 = 7 seconds
+Questions 11-15 = 6 seconds
+Questions 16-20 = 5 seconds
+Questions 21-30 = 4 seconds
+===================================================== */
+
+function getQuestionTime() {
+
+if (questionNumber <= 5) {
+return 8;
+}
+
+if (questionNumber <= 10) {
+return 7;
+}
+
+if (questionNumber <= 15) {
+return 6;
+}
+
+if (questionNumber <= 20) {
+return 5;
+}
+
+return 4;
+}
+
+
+/* =====================================================
+GET AVAILABLE UNITS
+
+Difficulty controls the possible units.
+===================================================== */
+
+function getAvailableUnits() {
+
+if (selectedDifficulty === "easy") {
+
+return [
+"bit",
+"nibble",
+"byte",
+"KB",
+"MB"
+];
+
+}
+
+if (selectedDifficulty === "medium") {
+
+return [
+"bit",
+"nibble",
+"byte",
+"KB",
+"MB",
+"GB"
+];
+
+}
+
+return [
+"bit",
+"nibble",
+"byte",
+"KB",
+"MB",
+"GB",
+"TB"
+];
+}
+
+
+/* =====================================================
+GENERATE NUMBER
+
+The later questions automatically use larger,
+more complicated numbers.
+===================================================== */
+
+function generateNumber(unit) {
+
+const q = questionNumber;
+
+/* BASIC */
+
+if (q <= 10) {
+
+if (unit === "bit") {
+return randomInt(1, 32);
+}
+
+if (unit === "nibble") {
+return randomInt(1, 16);
+}
+
+if (unit === "byte") {
+return randomInt(1, 16);
+}
+
+if (unit === "KB") {
+return randomInt(1, 10);
+}
+
+if (unit === "MB") {
+return randomInt(1, 10);
+}
+
+if (unit === "GB") {
+return randomInt(1, 5);
+}
+
+if (unit === "TB") {
+return randomInt(1, 2);
+}
+}
+
+
+/* INTERMEDIATE */
+
+if (q <= 20) {
+
+if (unit === "bit") {
+return randomInt(10, 500);
+}
+
+if (unit === "nibble") {
+return randomInt(5, 100);
+}
+
+if (unit === "byte") {
+return randomInt(5, 100);
+}
+
+if (unit === "KB") {
+return randomInt(10, 500);
+}
+
+if (unit === "MB") {
+return randomInt(10, 500);
+}
+
+if (unit === "GB") {
+return randomInt(1, 50);
+}
+
+if (unit === "TB") {
+return randomInt(1, 10);
+}
+}
+
+
+/* HARD */
+
+if (unit === "bit") {
+return randomInt(100, 10000);
+}
+
+if (unit === "nibble") {
+return randomInt(50, 2000);
+}
+
+if (unit === "byte") {
+return randomInt(50, 2000);
+}
+
+if (unit === "KB") {
+return randomInt(100, 10000);
+}
+
+if (unit === "MB") {
+return randomInt(100, 10000);
+}
+
+if (unit === "GB") {
+return randomInt(1, 500);
+}
+
+if (unit === "TB") {
+return randomInt(1, 100);
+
+}
+}
+
+
+/* =====================================================
+CREATE QUESTION
+===================================================== */
+
+function createQuestion() {
+
+const availableUnits =
+getAvailableUnits();
+
+let unit1;
+let unit2;
+
+let value1;
+let value2;
+
+let amount1;
+let amount2;
+
+let attempts = 0;
+
+
+do {
+
+unit1 =
+randomChoice(availableUnits);
+
+unit2 =
+randomChoice(availableUnits);
+
+value1 =
+generateNumber(unit1);
+
+value2 =
+generateNumber(unit2);
+
+amount1 =
+value1 * units[unit1].bits;
+
+amount2 =
+value2 * units[unit2].bits;
+
+attempts++;
+
+}
+while (
+(
+amount1 === amount2 ||
+amount1 / amount2 > 100 ||
+amount2 / amount1 > 100
+)
+&&
+attempts < 100
+);
+
+
+return {
+
+value1,
+unit1,
+
+value2,
+unit2,
+
+amount1,
+amount2
+
+};
+}
+
+
+/* =====================================================
+START GAME
+===================================================== */
+
+function startGame() {
+
+score = 0;
+
+questionNumber = 1;
+
+correctAnswers = 0;
+
+wrongAnswers = 0;
+
+document.getElementById("score").textContent =
+score;
+
+document.getElementById("startScreen")
+.classList.add("hidden");
+
+document.getElementById("gameOverScreen")
+.classList.add("hidden");
+
+document.getElementById("gameScreen")
+.classList.remove("hidden");
+
+nextQuestion();
+}
+
+
+/* =====================================================
+NEXT QUESTION
+===================================================== */
+
+function nextQuestion() {
+
+clearInterval(timer);
+
+answerLocked = false;
+
+if (questionNumber > totalQuestions) {
+
+endGame();
+
+return;
+}
+
+
+currentQuestion =
+createQuestion();
+
+
+questionTime =
+getQuestionTime();
+
+timeRemaining =
+questionTime;
+
+
+updateStage();
+
+document.getElementById("questionNumber")
+.textContent =
+questionNumber + " / " + totalQuestions;
+
+document.getElementById("questionTime")
+.textContent =
+questionTime + "s";
+
+
+document.getElementById("choice1")
+.textContent =
+formatAmount(
+currentQuestion.value1,
+currentQuestion.unit1
+);
+
+
+document.getElementById("choice2")
+.textContent =
+formatAmount(
+currentQuestion.value2,
+currentQuestion.unit2
+);
+
+
+document.getElementById("choice1")
+.disabled = false;
+
+document.getElementById("choice2")
+.disabled = false;
+
+
+document.getElementById("choice1")
+.className = "choice";
+
+document.getElementById("choice2")
+.className = "choice";
+
+
+document.getElementById("feedback")
+.className = "feedback";
+
+document.getElementById("feedback")
+.innerHTML = "";
+
+
+updateTimer();
+
+
+timer = setInterval(() => {
+
+timeRemaining -= 0.1;
+
+updateTimer();
+
+if (timeRemaining <= 0) {
+
+clearInterval(timer);
+
+timeUp();
+
+}
+
+}, 100);
+}
+
+
+/* =====================================================
+STAGE DISPLAY
+===================================================== */
+
+function updateStage() {
+
+let stage =
+document.getElementById("stage");
+
+
+if (questionNumber <= 10) {
+
+stage.textContent =
+"Stage 1 — Warm Up";
+
+}
+else if (questionNumber <= 20) {
+
+stage.textContent =
+"Stage 2 — Intermediate";
+
+}
+else {
+
+stage.textContent =
+"Stage 3 — GCSE Challenge";
+
+}
+}
+
+
+/* =====================================================
+TIMER
+===================================================== */
+
+function updateTimer() {
+
+let percentage =
+Math.max(
+0,
+(timeRemaining / questionTime) * 100
+);
+
+
+document.getElementById("timerFill")
+.style.width =
+percentage + "%";
+
+
+document.getElementById("timerText")
+.textContent =
+Math.max(
+0,
+timeRemaining
+).toFixed(1) + "s";
+}
+
+
+/* =====================================================
+ANSWER
+===================================================== */
+
+function answer(choice) {
+
+if (answerLocked) {
+return;
+}
+
+answerLocked = true;
+
+clearInterval(timer);
+
+
+document.getElementById("choice1")
+.disabled = true;
+
+document.getElementById("choice2")
+.disabled = true;
+
+
+let chosenAmount =
+choice === 0
+? currentQuestion.amount1
+: currentQuestion.amount2;
+
+
+let correctChoice =
+currentQuestion.amount1 >
+currentQuestion.amount2
+? 0
+: 1;
+
+
+let correctAmount =
+Math.max(
+currentQuestion.amount1,
+currentQuestion.amount2
+);
+
+
+if (chosenAmount === correctAmount) {
+
+correctAnswers++;
+
+let points =
+calculatePoints();
+
+score += points;
+
+document.getElementById("score")
+.textContent =
+score;
+
+
+document.getElementById(
+"choice" + (choice + 1)
+).classList.add("correct");
+
+
+showFeedback(
+true,
+points
+);
+
+}
+else {
+
+wrongAnswers++;
+
+
+document.getElementById(
+"choice" + (choice + 1)
+).classList.add("wrong");
+
+
+document.getElementById(
+"choice" + (correctChoice + 1)
+).classList.add("correct");
+
+
+showFeedback(
+false,
+0
+);
+}
+
+
+setTimeout(() => {
+
+questionNumber++;
+
+nextQuestion();
+
+}, 1700);
+}
+
+
+/* =====================================================
+TIME UP
+===================================================== */
+
+function timeUp() {
+
+if (answerLocked) {
+return;
+}
+
+answerLocked = true;
+
+wrongAnswers++;
+
+
+document.getElementById("choice1")
+.disabled = true;
+
+document.getElementById("choice2")
+.disabled = true;
+
+
+let correctChoice =
+currentQuestion.amount1 >
+currentQuestion.amount2
+? 0
+: 1;
+
+
+document.getElementById(
+"choice" + (correctChoice + 1)
+).classList.add("correct");
+
+
+let feedback =
+document.getElementById("feedback");
+
+
+feedback.className =
+"feedback bad";
+
+
+feedback.innerHTML =
+"⏰ Time's up!" +
+"<div class='explanation'>" +
+explanation() +
+"</div>";
+
+
+setTimeout(() => {
+
+questionNumber++;
+
+nextQuestion();
+
+}, 1800);
+}
+
+
+/* =====================================================
+FEEDBACK
+===================================================== */
+
+function showFeedback(
+correct,
+points
+) {
+
+let feedback =
+document.getElementById("feedback");
+
+
+if (correct) {
+
+feedback.className =
+"feedback good";
+
+
+feedback.innerHTML =
+"✅ Correct! +" +
+points +
+" points" +
+"<div class='explanation'>" +
+explanation() +
+"</div>";
+
+}
+else {
+
+feedback.className =
+"feedback bad";
+
+
+feedback.innerHTML =
+"❌ Incorrect" +
+"<div class='explanation'>" +
+explanation() +
+"</div>";
+}
+}
+
+
+/* =====================================================
+POINTS
+===================================================== */
+
+function calculatePoints() {
+
+let basePoints = 10;
+
+let speedBonus =
+Math.ceil(
+Math.max(
+0,
+timeRemaining
+)
+);
+
+
+let difficultyMultiplier = 1;
+
+
+if (selectedDifficulty === "medium") {
+
+difficultyMultiplier = 2;
+
+}
+
+if (selectedDifficulty === "hard") {
+
+difficultyMultiplier = 3;
+
+}
+
+
+return (
+(basePoints + speedBonus)
+*
+difficultyMultiplier
+);
+}
+
+
+/* =====================================================
+EXPLANATION
+===================================================== */
+
+function explanation() {
+
+let q =
+currentQuestion;
+
+
+let larger;
+
+if (q.amount1 > q.amount2) {
+
+larger =
+formatAmount(
+q.value1,
+q.unit1
+);
+
+}
+else {
+
+larger =
+formatAmount(
+q.value2,
+q.unit2
+);
+}
+
+
+return (
+"The larger amount is <strong>" +
+larger +
+"</strong>."
+);
+}
+
+
+/* =====================================================
+FORMAT
+===================================================== */
+
+function formatAmount(
+value,
+unit
+) {
+
+return (
+numberWithCommas(value)
++
+" "
++
+unit
+);
+}
+
+
+/* =====================================================
+GAME OVER
+===================================================== */
+
+function endGame() {
+
+clearInterval(timer);
+
+
+if (score > bestScore) {
+
+bestScore = score;
+
+localStorage.setItem(
+"byteBattleBest",
+bestScore
+);
+}
+
+
+document.getElementById("gameScreen")
+.classList.add("hidden");
+
+
+document.getElementById("gameOverScreen")
+.classList.remove("hidden");
+
+
+document.getElementById("finalScore")
+.textContent =
+score;
+
+
+let percentage =
+Math.round(
+(correctAnswers / totalQuestions)
+* 100
+);
+
+
+document.getElementById("percentage")
+.textContent =
+percentage + "%";
+
+
+document.getElementById("correctAnswers")
+.textContent =
+correctAnswers;
+
+
+document.getElementById("wrongAnswers")
+.textContent =
+wrongAnswers;
+
+
+document.getElementById("bestFinal")
+.textContent =
+bestScore;
+
+
+let message;
+
+
+if (percentage >= 90) {
+
+message =
+"🔥 Excellent! You have a very strong understanding of data units.";
+
+}
+else if (percentage >= 75) {
+
+message =
+"👏 Very good! You have a solid understanding of data units.";
+
+}
+else if (percentage >= 60) {
+
+message =
+"👍 Good effort! Keep practising those conversions.";
+
+}
+else if (percentage >= 40) {
+
+message =
+"📚 Keep practising. Focus on converting everything to the same unit.";
+
+}
+else {
+
+message =
+"💪 Keep going! Practise the conversion rules and try again.";
+
+}
+
+
+document.getElementById("finalMessage")
+.textContent =
+message;
+}
+
+
+/* =====================================================
+RESTART
+===================================================== */
+
+function restartGame() {
+
+document.getElementById("gameOverScreen")
+.classList.add("hidden");
+
+document.getElementById("gameScreen")
+.classList.remove("hidden");
+
+startGame();
+}
+
+
+/* =====================================================
+RANDOM FUNCTIONS
+===================================================== */
+
+function randomInt(min, max) {
+
+return Math.floor(
+Math.random() *
+(max - min + 1)
+) + min;
+}
+
+
+function randomChoice(array) {
+
+return array[
+Math.floor(
+Math.random() *
+array.length
+)
+];
+}
+
+
+function numberWithCommas(number) {
+
+return number.toLocaleString("en-GB");
+}
+
+</script>
+
+</body>
+</html>
