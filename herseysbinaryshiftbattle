@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hersey's Binary Shift Battle</title>
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #0f172a, #1e3a5f);
+color: white;
+min-height: 100vh;
+padding: 15px;
+}
+
+.container {
+max-width: 900px;
+margin: auto;
+}
+
+.panel {
+background: #172033;
+border: 1px solid #334155;
+border-radius: 22px;
+padding: 25px;
+box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+h1 {
+text-align: center;
+margin: 0 0 5px;
+font-size: clamp(30px, 7vw, 48px);
+}
+
+.subtitle {
+text-align: center;
+color: #94a3b8;
+margin-bottom: 25px;
+}
+
+.card {
+background: #202c40;
+border: 1px solid #3b4a61;
+border-radius: 16px;
+padding: 20px;
+margin-top: 15px;
+}
+
+.center {
+text-align: center;
+}
+
+.hidden {
+display: none;
+}
+
+/* Buttons */
+
+.primary {
+background: #38bdf8;
+color: #062033;
+border: none;
+border-radius: 12px;
+padding: 14px 30px;
+font-size: 17px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 15px;
+}
+
+.primary:hover {
+filter: brightness(1.1);
+}
+
+/* Rules */
+
+.rules {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin: 20px 0;
+}
+
+.rule {
+background: #172033;
+border-radius: 12px;
+padding: 15px;
+}
+
+.rule strong {
+display: block;
+color: #38bdf8;
+font-size: 22px;
+margin-bottom: 7px;
+}
+
+/* Stats */
+
+.stats {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+}
+
+.stat {
+text-align: center;
+margin: 0;
+}
+
+.stat span {
+display: block;
+color: #94a3b8;
+font-size: 12px;
+text-transform: uppercase;
+}
+
+.stat strong {
+display: block;
+font-size: 25px;
+margin-top: 5px;
+}
+
+/* Timer */
+
+.timer-header {
+display: flex;
+justify-content: space-between;
+}
+
+.timer-bar {
+height: 12px;
+background: #334155;
+border-radius: 20px;
+overflow: hidden;
+margin-top: 8px;
+}
+
+.timer-fill {
+height: 100%;
+background: #38bdf8;
+width: 100%;
+}
+
+/* Question */
+
+.stage {
+color: #94a3b8;
+font-weight: bold;
+font-size: 14px;
+text-transform: uppercase;
+}
+
+.binary {
+font-family: Consolas, monospace;
+font-size: clamp(32px, 10vw, 62px);
+font-weight: bold;
+letter-spacing: 5px;
+margin: 20px 0;
+}
+
+.operation {
+font-size: clamp(20px, 5vw, 28px);
+font-weight: bold;
+margin-bottom: 15px;
+}
+
+.question-text {
+color: #cbd5e1;
+}
+
+/* Answers */
+
+.choices {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+margin-top: 20px;
+}
+
+.choice {
+background: #172033;
+color: white;
+border: 2px solid #475569;
+border-radius: 12px;
+padding: 18px 8px;
+font-family: Consolas, monospace;
+font-size: clamp(18px, 5vw, 25px);
+font-weight: bold;
+cursor: pointer;
+}
+
+.choice:hover {
+background: #26364e;
+border-color: #38bdf8;
+}
+
+.choice:disabled {
+cursor: default;
+}
+
+.choice.correct {
+background: #14532d;
+border-color: #4ade80;
+}
+
+.choice.wrong {
+background: #7f1d1d;
+border-color: #f87171;
+}
+
+/* Feedback */
+
+.feedback {
+min-height: 65px;
+margin-top: 18px;
+font-size: 16px;
+line-height: 1.5;
+font-weight: bold;
+}
+
+/* End */
+
+.final-score {
+font-size: 60px;
+font-weight: bold;
+color: #38bdf8;
+}
+
+.final-percent {
+font-size: 28px;
+font-weight: bold;
+}
+
+.final-message {
+color: #cbd5e1;
+margin: 15px 0;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+body {
+padding: 8px;
+}
+
+.panel {
+padding: 15px;
+}
+
+.stats {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.rules {
+grid-template-columns: 1fr;
+}
+
+.choices {
+grid-template-columns: 1fr;
+}
+
+.binary {
+letter-spacing: 2px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="panel">
+
+<!-- ================= START SCREEN ================= -->
+
+<section id="startScreen">
+
+<h1>⚡ Hersey's Binary Shift Battle</h1>
+
+<p class="subtitle">
+GCSE Computer Science • Binary Shifting
+</p>
+
+<div class="card center">
+
+<h2>Can you shift the bits?</h2>
+
+<p>
+Every question uses exactly
+<strong>1 byte = 8 bits</strong>.
+</p>
+
+<div class="rules">
+
+<div class="rule">
+<strong>⬅️ LEFT</strong>
+Move bits to the left.
+</div>
+
+<div class="rule">
+<strong>➡️ RIGHT</strong>
+Move bits to the right.
+</div>
+
+<div class="rule">
+<strong>0️⃣ ZERO</strong>
+Zeros fill the empty spaces.
+</div>
+
+</div>
+
+<p style="color:#94a3b8;">
+Bits shifted off the end are discarded.
+</p>
+
+<h3>Choose difficulty</h3>
+
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+
+<button class="primary" onclick="startGame('easy')">
+Easy
+</button>
+
+<button class="primary" onclick="startGame('medium')">
+Medium
+</button>
+
+<button class="primary" onclick="startGame('hard')">
+Hard
+</button>
+
+</div>
+
+</div>
+
+<div class="card center">
+
+<strong>How the game works</strong>
+
+<p class="question-text">
+30 questions • 8 seconds to start • gets faster •
+instant feedback • high score saved
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ================= GAME SCREEN ================= -->
+
+<section id="gameScreen" class="hidden">
+
+<h1>⚡ Hersey's Binary Shift Battle</h1>
+
+<p class="subtitle">
+1 BYTE = 8 BITS
+</p>
+
+
+<div class="stats">
+
+<div class="card stat">
+<span>Score</span>
+<strong id="score">0</strong>
+</div>
+
+<div class="card stat">
+<span>Question</span>
+<strong id="questionNumber">1 / 30</strong>
+</div>
+
+<div class="card stat">
+<span>Time</span>
+<strong id="time">8.0s</strong>
+</div>
+
+<div class="card stat">
+<span>Correct</span>
+<strong id="correct">0</strong>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="timer-header">
+<strong>TIME</strong>
+<span id="timerText">8.0s</span>
+</div>
+
+<div class="timer-bar">
+<div id="timerFill" class="timer-fill"></div>
+</div>
+
+</div>
+
+
+<div class="card center">
+
+<div id="stage" class="stage">
+Stage 1 — Warm Up
+</div>
+
+<h3>
+What is the result of this binary shift?
+</h3>
+
+<div id="binaryNumber" class="binary">
+00101100
+</div>
+
+<div id="operation" class="operation">
+⬅️ LEFT SHIFT 1 PLACE
+</div>
+
+<p class="question-text">
+Choose the correct 8-bit answer.
+</p>
+
+<div id="choices" class="choices">
+</div>
+
+<div id="feedback" class="feedback">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= END SCREEN ================= -->
+
+<section id="endScreen" class="hidden">
+
+<div class="card center">
+
+<h1>🏆 Game Complete!</h1>
+
+<p class="question-text">
+Final Score
+</p>
+
+<div id="finalScore" class="final-score">
+0
+</div>
+
+<div id="finalPercent" class="final-percent">
+0%
+</div>
+
+<p id="finalStats"></p>
+
+<p id="finalMessage" class="final-message">
+</p>
+
+<button class="primary" onclick="startGame(currentDifficulty)">
+Play Again
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+Hersey's Binary Shift Battle
+===================================================== */
+
+let question = 1;
+let score = 0;
+let correct = 0;
+let locked = false;
+
+let timer;
+let totalTime;
+let remaining;
+
+let currentQuestion;
+
+let currentDifficulty = "easy";
+
+
+/* ---------- Helpers ---------- */
+
+function $(id) {
+return document.getElementById(id);
+}
+
+
+function random(min, max) {
+return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function toBinary8(number) {
+
+return number
+.toString(2)
+.padStart(8, "0");
+
+}
+
+
+/* ---------- Timing ---------- */
+
+function getTime() {
+
+if (question <= 5) {
+return 8;
+}
+
+if (question <= 10) {
+return 7;
+}
+
+if (question <= 15) {
+return 6;
+}
+
+if (question <= 20) {
+return 5;
+}
+
+return 4;
+
+}
+
+
+/* ---------- Generate Question ---------- */
+
+function createQuestion() {
+
+let value;
+let direction;
+let shift;
+let result;
+
+let maxShift;
+
+if (currentDifficulty === "easy") {
+
+maxShift = question <= 10 ? 2 : 3;
+
+} else if (currentDifficulty === "medium") {
+
+maxShift = question <= 10 ? 2 : 3;
+
+} else {
+
+maxShift = question <= 20 ? 3 : 4;
+
+}
+
+
+value = random(1, 255);
+
+direction =
+Math.random() < 0.5
+? "left"
+: "right";
+
+
+shift = random(1, maxShift);
+
+
+/*
+JavaScript bitwise operations work on
+integers, so &255 keeps everything
+within exactly ONE BYTE.
+*/
+
+if (direction === "left") {
+
+result = (value << shift) & 255;
+
+} else {
+
+result = value >> shift;
+
+}
+
+
+/*
+Occasionally regenerate a question where
+the answer would be identical.
+*/
+
+if (result === value) {
+
+return createQuestion();
+
+}
+
+
+return {
+value: value,
+direction: direction,
+shift: shift,
+result: result
+};
+
+}
+
+
+/* ---------- Generate Answers ---------- */
+
+function createChoices(correctAnswer) {
+
+let answers = new Set();
+
+answers.add(correctAnswer);
+
+
+/*
+Plausible GCSE mistakes:
+- no shift
+- off by one
+- wrong bit changed
+*/
+
+answers.add(correctAnswer ^ 1);
+answers.add(correctAnswer ^ 2);
+answers.add(correctAnswer ^ 4);
+answers.add(correctAnswer ^ 8);
+
+
+/*
+Fill remaining spaces if necessary.
+*/
+
+while (answers.size < 4) {
+
+answers.add(random(0, 255));
+
+}
+
+
+return [...answers]
+.slice(0, 4)
+.sort(() => Math.random() - 0.5);
+
+}
+
+
+/* ---------- Start Game ---------- */
+
+function startGame(difficulty) {
+
+clearInterval(timer);
+
+currentDifficulty = difficulty || "easy";
+
+question = 1;
+score = 0;
+correct = 0;
+
+$("startScreen").classList.add("hidden");
+$("endScreen").classList.add("hidden");
+$("gameScreen").classList.remove("hidden");
+
+$("score").textContent = "0";
+$("correct").textContent = "0";
+
+nextQuestion();
+
+}
+
+
+/* ---------- Next Question ---------- */
+
+function nextQuestion() {
+
+if (question > 30) {
+
+endGame();
+return;
+
+}
+
+
+currentQuestion = createQuestion();
+
+totalTime = getTime();
+remaining = totalTime;
+
+locked = false;
+
+
+$("questionNumber").textContent =
+question + " / 30";
+
+
+$("binaryNumber").textContent =
+toBinary8(currentQuestion.value);
+
+
+let directionText =
+currentQuestion.direction === "left"
+? "⬅️ LEFT SHIFT "
+: "➡️ RIGHT SHIFT ";
+
+
+$("operation").textContent =
+directionText +
+currentQuestion.shift +
+(currentQuestion.shift === 1
+? " PLACE"
+: " PLACES");
+
+
+if (question <= 10) {
+
+$("stage").textContent =
+"Stage 1 — Warm Up";
+
+} else if (question <= 20) {
+
+$("stage").textContent =
+"Stage 2 — Intermediate";
+
+} else {
+
+$("stage").textContent =
+"Stage 3 — GCSE Challenge";
+
+}
+
+
+$("feedback").textContent = "";
+
+
+let choices = $("choices");
+
+choices.innerHTML = "";
+
+
+let answers =
+createChoices(currentQuestion.result);
+
+
+answers.forEach(answer => {
+
+let button =
+document.createElement("button");
+
+button.className = "choice";
+
+button.textContent =
+toBinary8(answer);
+
+
+button.onclick =
+function() {
+
+selectAnswer(answer, button);
+
+};
+
+
+choices.appendChild(button);
+
+});
+
+
+updateTimer();
+
+
+clearInterval(timer);
+
+
+timer = setInterval(function() {
+
+remaining -= 0.1;
+
+updateTimer();
+
+
+if (remaining <= 0) {
+
+clearInterval(timer);
+
+timeUp();
+
+}
+
+}, 100);
+
+}
+
+
+/* ---------- Timer ---------- */
+
+function updateTimer() {
+
+let display =
+Math.max(0, remaining);
+
+
+$("time").textContent =
+display.toFixed(1) + "s";
+
+
+$("timerText").textContent =
+display.toFixed(1) + "s";
+
+
+$("timerFill").style.width =
+(display / totalTime * 100) + "%";
+
+}
+
+
+/* ---------- Explanation ---------- */
+
+function getExplanation() {
+
+let binary =
+toBinary8(currentQuestion.value);
+
+
+let answer =
+toBinary8(currentQuestion.result);
+
+
+if (currentQuestion.direction === "left") {
+
+return (
+binary +
+" shifted LEFT by " +
+currentQuestion.shift +
+" = " +
+answer
+);
+
+} else {
+
+return (
+binary +
+" shifted RIGHT by " +
+currentQuestion.shift +
+" = " +
+answer
+);
+
+}
+
+}
+
+
+/* ---------- Answer ---------- */
+
+function selectAnswer(value, button) {
+
+if (locked) {
+return;
+}
+
+
+locked = true;
+
+clearInterval(timer);
+
+
+document
+.querySelectorAll(".choice")
+.forEach(function(btn) {
+
+btn.disabled = true;
+
+});
+
+
+if (value === currentQuestion.result) {
+
+correct++;
+
+
+let speedBonus =
+Math.ceil(remaining);
+
+
+let points =
+10 + speedBonus;
+
+
+/*
+Difficulty multiplier.
+*/
+
+if (currentDifficulty === "medium") {
+
+points *= 2;
+
+}
+
+
+if (currentDifficulty === "hard") {
+
+points *= 3;
+
+}
+
+
+score += points;
+
+
+button.classList.add("correct");
+
+
+$("feedback").innerHTML =
+"✅ Correct! <b>+" +
+points +
+" points</b><br>" +
+getExplanation();
+
+
+} else {
+
+button.classList.add("wrong");
+
+
+document
+.querySelectorAll(".choice")
+.forEach(function(btn) {
+
+if (
+btn.textContent ===
+toBinary8(currentQuestion.result)
+) {
+
+btn.classList.add("correct");
+
+}
+
+});
+
+
+$("feedback").innerHTML =
+"❌ Not quite.<br>" +
+"The correct answer is <b>" +
+toBinary8(currentQuestion.result) +
+"</b><br>" +
+getExplanation();
+
+}
+
+
+$("score").textContent = score;
+
+$("correct").textContent = correct;
+
+
+setTimeout(function() {
+
+question++;
+
+nextQuestion();
+
+}, 1400);
+
+}
+
+
+/* ---------- Time Up ---------- */
+
+function timeUp() {
+
+if (locked) {
+return;
+}
+
+
+locked = true;
+
+
+document
+.querySelectorAll(".choice")
+.forEach(function(btn) {
+
+btn.disabled = true;
+
+
+if (
+btn.textContent ===
+toBinary8(currentQuestion.result)
+) {
+
+btn.classList.add("correct");
+
+}
+
+});
+
+
+$("feedback").innerHTML =
+"⏰ Time's up!<br>" +
+"The correct answer is <b>" +
+toBinary8(currentQuestion.result) +
+"</b><br>" +
+getExplanation();
+
+
+setTimeout(function() {
+
+question++;
+
+nextQuestion();
+
+}, 1600);
+
+}
+
+
+/* ---------- End Game ---------- */
+
+function endGame() {
+
+clearInterval(timer);
+
+
+$("gameScreen").classList.add("hidden");
+
+$("endScreen").classList.remove("hidden");
+
+
+let percentage =
+Math.round(correct / 30 * 100);
+
+
+$("finalScore").textContent =
+score;
+
+
+$("finalPercent").textContent =
+percentage + "%";
+
+
+$("finalStats").textContent =
+correct + " correct out of 30";
+
+
+let message;
+
+
+if (percentage >= 90) {
+
+message =
+"Excellent binary shifting! 🔥";
+
+} else if (percentage >= 75) {
+
+message =
+"Very good work — keep practising!";
+
+} else if (percentage >= 60) {
+
+message =
+"Good effort — check carefully which direction the bits move.";
+
+} else {
+
+message =
+"Keep practising the 8-bit shift rules and try again!";
+
+}
+
+
+/*
+High score is saved separately
+for each difficulty.
+*/
+
+let storageKey =
+"binaryShiftBest_" +
+currentDifficulty;
+
+
+let oldBest =
+Number(localStorage.getItem(storageKey) || 0);
+
+
+if (score > oldBest) {
+
+localStorage.setItem(
+storageKey,
+score
+);
+
+
+message +=
+" 🏆 New high score!";
+
+}
+
+
+$("finalMessage").textContent =
+message;
+
+}
+
+</script>
+
+</body>
+</html>
