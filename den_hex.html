@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hersey's Denary to Hex Battle</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e3a5f);
+color:white;
+min-height:100vh;
+padding:15px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.panel{
+background:#172033;
+border:1px solid #334155;
+border-radius:22px;
+padding:25px;
+box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+h1{
+text-align:center;
+margin:0 0 5px;
+font-size:clamp(30px,7vw,48px);
+}
+
+.subtitle{
+text-align:center;
+color:#94a3b8;
+margin-bottom:25px;
+}
+
+.card{
+background:#202c40;
+border:1px solid #3b4a61;
+border-radius:16px;
+padding:20px;
+margin-top:15px;
+}
+
+.center{
+text-align:center;
+}
+
+.hidden{
+display:none;
+}
+
+.primary{
+background:#38bdf8;
+color:#062033;
+border:none;
+border-radius:12px;
+padding:14px 30px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+margin-top:15px;
+}
+
+.primary:hover{
+filter:brightness(1.1);
+}
+
+.rules{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:20px 0;
+}
+
+.rule{
+background:#172033;
+border-radius:12px;
+padding:15px;
+}
+
+.rule strong{
+display:block;
+color:#38bdf8;
+font-size:22px;
+margin-bottom:7px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat span{
+display:block;
+color:#94a3b8;
+font-size:12px;
+text-transform:uppercase;
+}
+
+.stat strong{
+display:block;
+font-size:25px;
+margin-top:5px;
+}
+
+.timer-header{
+display:flex;
+justify-content:space-between;
+}
+
+.timer-bar{
+height:12px;
+background:#334155;
+border-radius:20px;
+overflow:hidden;
+margin-top:8px;
+}
+
+.timer-fill{
+height:100%;
+background:#38bdf8;
+width:100%;
+}
+
+.stage{
+color:#94a3b8;
+font-weight:bold;
+font-size:14px;
+text-transform:uppercase;
+}
+
+.question-type{
+font-size:20px;
+font-weight:bold;
+margin-top:12px;
+}
+
+.question-value{
+font-size:clamp(45px,12vw,72px);
+font-weight:bold;
+color:#38bdf8;
+margin:20px 0;
+}
+
+.question-text{
+color:#cbd5e1;
+}
+
+.choices{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+.choice{
+background:#172033;
+color:white;
+border:2px solid #475569;
+border-radius:12px;
+padding:18px;
+font-size:28px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.choice:hover{
+background:#26364e;
+border-color:#38bdf8;
+}
+
+.choice.correct{
+background:#14532d;
+border-color:#4ade80;
+}
+
+.choice.wrong{
+background:#7f1d1d;
+border-color:#f87171;
+}
+
+.feedback{
+min-height:60px;
+margin-top:18px;
+font-size:16px;
+font-weight:bold;
+}
+
+.final-score{
+font-size:60px;
+font-weight:bold;
+color:#38bdf8;
+}
+
+.final-percent{
+font-size:28px;
+font-weight:bold;
+}
+
+.example{
+font-size:20px;
+color:#38bdf8;
+font-family:Consolas,monospace;
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+.rules{
+grid-template-columns:1fr;
+}
+
+.choices{
+grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="panel">
+
+<section id="startScreen">
+
+<h1>⚔️ Hersey's Denary to Hex Battle</h1>
+
+<p class="subtitle">
+GCSE Computer Science • Number Systems
+</p>
+
+<div class="card center">
+
+<h2>Can you convert Denary to Hexadecimal?</h2>
+
+<p>
+Answer quickly to earn bonus points!
+</p>
+
+<p class="example">
+10 = A • 15 = F • 16 = 10
+</p>
+
+<div class="rules">
+
+<div class="rule">
+<strong>🔢 DENARY</strong>
+Read the denary number.
+</div>
+
+<div class="rule">
+<strong>➡️ CONVERT</strong>
+Convert it into hexadecimal.
+</div>
+
+<div class="rule">
+<strong>⚡ FAST</strong>
+Answer quickly for extra points.
+</div>
+
+</div>
+
+<p style="color:#94a3b8">
+30 questions • Gets faster as you play
+</p>
+
+<button class="primary" onclick="startGame()">
+Start Battle
+</button>
+
+</div>
+
+</section>
+
+<section id="gameScreen" class="hidden">
+
+<h1>⚔️ Hersey's Denary to Hex Battle</h1>
+
+<p class="subtitle">
+Convert DENARY into HEX
+</p>
+
+<div class="stats">
+
+<div class="card stat">
+<span>Score</span>
+<strong id="score">0</strong>
+</div>
+
+<div class="card stat">
+<span>Question</span>
+<strong id="questionNumber">1 / 30</strong>
+</div>
+
+<div class="card stat">
+<span>Time</span>
+<strong id="time">8.0s</strong>
+</div>
+
+<div class="card stat">
+<span>Correct</span>
+<strong id="correct">0</strong>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="timer-header">
+<strong>TIME</strong>
+<span id="timerText">8.0s</span>
+</div>
+
+<div class="timer-bar">
+<div id="timerFill" class="timer-fill"></div>
+</div>
+
+</div>
+
+<div class="card center">
+
+<div id="stage" class="stage">
+Stage 1 — Warm Up
+</div>
+
+<div class="question-type">
+🔢 DENARY → HEX
+</div>
+
+<p class="question-text">
+What is the hexadecimal value?
+</p>
+
+<div id="questionValue" class="question-value">
+10
+</div>
+
+<div id="choices" class="choices"></div>
+
+<div id="feedback" class="feedback"></div>
+
+</div>
+
+</section>
+
+<section id="endScreen" class="hidden">
+
+<div class="card center">
+
+<h1>🏆 Battle Complete!</h1>
+
+<p>Final Score</p>
+
+<div id="finalScore" class="final-score">0</div>
+
+<div id="finalPercent" class="final-percent">0%</div>
+
+<p id="finalStats"></p>
+
+<p id="finalMessage"></p>
+
+<button class="primary" onclick="startGame()">
+Play Again
+</button>
+
+</div>
+
+</section>
+
+</div>
+</div>
+
+<script>
+
+let question = 1;
+let score = 0;
+let correct = 0;
+
+let timer;
+let totalTime;
+let remaining;
+let locked = false;
+let currentQuestion;
+
+function $(id){
+return document.getElementById(id);
+}
+
+function random(min,max){
+return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function getTime(){
+
+if(question <= 5) return 8;
+if(question <=10) return 7;
+if(question <=15) return 6;
+if(question <=20) return 5;
+
+return 4;
+}
+
+function createQuestion(){
+
+let pool;
+
+if(question <= 10){
+
+pool=[
+10,11,12,13,14,15,
+16,17,18,20,24,32
+];
+
+}
+else if(question <=20){
+
+pool=[
+26,31,36,40,42,
+47,48,50,60,64
+];
+
+}
+else{
+
+pool=[
+72,80,90,
+100,127,128,150
+];
+
+}
+
+let denary =
+pool[random(0,pool.length-1)];
+
+return{
+denary:denary,
+hex:denary.toString(16).toUpperCase()
+};
+
+}
+
+function createChoices(correctHex){
+
+let answers = new Set();
+answers.add(correctHex);
+
+while(answers.size < 4){
+
+let value =
+parseInt(correctHex,16);
+
+let offset =
+random(-5,5);
+
+if(offset !== 0){
+
+answers.add(
+(value + offset)
+.toString(16)
+.toUpperCase()
+);
+
+}
+
+}
+
+return [...answers]
+.sort(()=>Math.random()-0.5);
+
+}
+
+function startGame(){
+
+clearInterval(timer);
+
+question = 1;
+score = 0;
+correct = 0;
+
+$("startScreen").classList.add("hidden");
+$("endScreen").classList.add("hidden");
+$("gameScreen").classList.remove("hidden");
+
+nextQuestion();
+
+}
+
+function nextQuestion(){
+
+if(question > 30){
+
+endGame();
+return;
+
+}
+
+currentQuestion =
+createQuestion();
+
+totalTime =
+getTime();
+
+remaining =
+totalTime;
+
+locked = false;
+
+$("questionNumber").textContent =
+question + " / 30";
+
+$("score").textContent =
+score;
+
+$("correct").textContent =
+correct;
+
+if(question <=10){
+
+$("stage").textContent =
+"Stage 1 — Warm Up";
+
+}
+else if(question <=20){
+
+$("stage").textContent =
+"Stage 2 — Intermediate";
+
+}
+else{
+
+$("stage").textContent =
+"Stage 3 — GCSE Challenge";
+
+}
+
+$("questionValue").textContent =
+currentQuestion.denary;
+
+$("feedback").textContent = "";
+
+const choices =
+$("choices");
+
+choices.innerHTML = "";
+
+createChoices(currentQuestion.hex)
+.forEach(answer=>{
+
+const btn =
+document.createElement("button");
+
+btn.className = "choice";
+btn.textContent = answer;
+
+btn.onclick = ()=>selectAnswer(answer,btn);
+
+choices.appendChild(btn);
+
+});
+
+updateTimer();
+
+clearInterval(timer);
+
+timer = setInterval(()=>{
+
+remaining -= 0.1;
+
+updateTimer();
+
+if(remaining <= 0){
+
+clearInterval(timer);
+timeUp();
+
+}
+
+},100);
+
+}
+
+function updateTimer(){
+
+let display =
+Math.max(0,remaining);
+
+$("time").textContent =
+display.toFixed(1)+"s";
+
+$("timerText").textContent =
+display.toFixed(1)+"s";
+
+$("timerFill").style.width =
+(display/totalTime*100)+"%";
+
+}
+
+function selectAnswer(answer,button){
+
+if(locked) return;
+
+locked = true;
+
+clearInterval(timer);
+
+const correctAnswer =
+currentQuestion.hex;
+
+document
+.querySelectorAll(".choice")
+.forEach(btn=>btn.disabled=true);
+
+if(answer === correctAnswer){
+
+button.classList.add("correct");
+
+correct++;
+
+const points =
+10 + Math.ceil(remaining);
+
+score += points;
+
+$("feedback").innerHTML =
+"✅ Correct! +" +
+points +
+" points<br>" +
+currentQuestion.denary +
+" = " +
+currentQuestion.hex;
+
+}
+else{
+
+button.classList.add("wrong");
+
+document
+.querySelectorAll(".choice")
+.forEach(btn=>{
+
+if(btn.textContent === correctAnswer){
+btn.classList.add("correct");
+}
+
+});
+
+$("feedback").innerHTML =
+"❌ Incorrect<br>" +
+currentQuestion.denary +
+" = " +
+correctAnswer;
+
+}
+
+setTimeout(()=>{
+
+question++;
+nextQuestion();
+
+},1400);
+
+}
+
+function timeUp(){
+
+if(locked) return;
+
+locked = true;
+
+const correctAnswer =
+currentQuestion.hex;
+
+document
+.querySelectorAll(".choice")
+.forEach(btn=>{
+
+btn.disabled=true;
+
+if(btn.textContent===correctAnswer){
+btn.classList.add("correct");
+}
+
+});
+
+$("feedback").innerHTML =
+"⏰ Time's up!<br>" +
+currentQuestion.denary +
+" = " +
+correctAnswer;
+
+setTimeout(()=>{
+
+question++;
+nextQuestion();
+
+},1600);
+
+}
+
+function endGame(){
+
+$("gameScreen")
+.classList.add("hidden");
+
+$("endScreen")
+.classList.remove("hidden");
+
+let percentage =
+Math.round((correct/30)*100);
+
+$("finalScore").textContent =
+score;
+
+$("finalPercent").textContent =
+percentage + "%";
+
+$("finalStats").textContent =
+correct + " correct out of 30";
+
+let message;
+
+if(percentage >= 90){
+
+message =
+"🔥 Outstanding hexadecimal skills!";
+
+}
+else if(percentage >= 75){
+
+message =
+"👏 Great job!";
+
+}
+else if(percentage >= 60){
+
+message =
+"👍 Good effort. Keep practising!";
+
+}
+else{
+
+message =
+"💪 Keep revising denary to hex conversions.";
+
+}
+
+$("finalMessage").textContent =
+message;
+
+}
+
+</script>
+
+</body>
+</html>
+``
