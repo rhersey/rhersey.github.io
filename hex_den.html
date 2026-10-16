@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hersey's Hex to Denary Battle</title>
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #0f172a, #1e3a5f);
+color: white;
+min-height: 100vh;
+padding: 15px;
+}
+
+.container {
+max-width: 900px;
+margin: auto;
+}
+
+.panel {
+background: #172033;
+border: 1px solid #334155;
+border-radius: 22px;
+padding: 25px;
+box-shadow: 0 15px 40px rgba(0,0,0,.4);
+}
+
+h1 {
+text-align: center;
+margin: 0 0 5px;
+font-size: clamp(30px, 7vw, 48px);
+}
+
+.subtitle {
+text-align: center;
+color: #94a3b8;
+margin-bottom: 25px;
+}
+
+.card {
+background: #202c40;
+border: 1px solid #3b4a61;
+border-radius: 16px;
+padding: 20px;
+margin-top: 15px;
+}
+
+.center {
+text-align: center;
+}
+
+.hidden {
+display: none;
+}
+
+.primary {
+background: #38bdf8;
+color: #062033;
+border: none;
+border-radius: 12px;
+padding: 14px 30px;
+font-size: 17px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 15px;
+}
+
+.primary:hover {
+filter: brightness(1.1);
+}
+
+.rules {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin: 20px 0;
+}
+
+.rule {
+background: #172033;
+border-radius: 12px;
+padding: 15px;
+}
+
+.rule strong {
+display: block;
+color: #38bdf8;
+font-size: 22px;
+margin-bottom: 7px;
+}
+
+.stats {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+}
+
+.stat {
+text-align: center;
+margin: 0;
+}
+
+.stat span {
+display: block;
+color: #94a3b8;
+font-size: 12px;
+text-transform: uppercase;
+}
+
+.stat strong {
+display: block;
+font-size: 25px;
+margin-top: 5px;
+}
+
+.timer-header {
+display: flex;
+justify-content: space-between;
+}
+
+.timer-bar {
+height: 12px;
+background: #334155;
+border-radius: 20px;
+overflow: hidden;
+margin-top: 8px;
+}
+
+.timer-fill {
+height: 100%;
+background: #38bdf8;
+width: 100%;
+}
+
+.stage {
+color: #94a3b8;
+font-weight: bold;
+font-size: 14px;
+text-transform: uppercase;
+}
+
+.question-type {
+font-size: 20px;
+font-weight: bold;
+margin-top: 12px;
+}
+
+.question-value {
+font-family: Consolas, monospace;
+font-size: clamp(45px, 12vw, 70px);
+font-weight: bold;
+letter-spacing: 5px;
+margin: 20px 0;
+color: #38bdf8;
+}
+
+.question-text {
+color: #cbd5e1;
+}
+
+.choices {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+margin-top: 20px;
+}
+
+.choice {
+background: #172033;
+color: white;
+border: 2px solid #475569;
+border-radius: 12px;
+padding: 18px 8px;
+font-size: clamp(22px, 5vw, 30px);
+font-weight: bold;
+cursor: pointer;
+}
+
+.choice:hover {
+background: #26364e;
+border-color: #38bdf8;
+}
+
+.choice:disabled {
+cursor: default;
+}
+
+.choice.correct {
+background: #14532d;
+border-color: #4ade80;
+}
+
+.choice.wrong {
+background: #7f1d1d;
+border-color: #f87171;
+}
+
+.feedback {
+min-height: 65px;
+margin-top: 18px;
+font-size: 16px;
+line-height: 1.5;
+font-weight: bold;
+}
+
+.final-score {
+font-size: 60px;
+font-weight: bold;
+color: #38bdf8;
+}
+
+.final-percent {
+font-size: 28px;
+font-weight: bold;
+}
+
+.final-message {
+color: #cbd5e1;
+margin: 15px 0;
+}
+
+.example {
+font-family: Consolas, monospace;
+font-size: 20px;
+color: #38bdf8;
+}
+
+@media (max-width: 600px) {
+
+body {
+padding: 8px;
+}
+
+.panel {
+padding: 15px;
+}
+
+.stats {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.rules {
+grid-template-columns: 1fr;
+}
+
+.choices {
+grid-template-columns: 1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="panel">
+
+<section id="startScreen">
+
+<h1>⚔️ Hersey's Hex to Denary Battle</h1>
+
+<p class="subtitle">
+GCSE Computer Science • Number Systems
+</p>
+
+<div class="card center">
+
+<h2>Can you convert Hexadecimal to Denary?</h2>
+
+<p>
+Answer as quickly as possible to earn bonus points.
+</p>
+
+<p class="example">
+A = 10 • F = 15 • 10 = 16
+</p>
+
+<div class="rules">
+
+<div class="rule">
+<strong>🔢 HEX</strong>
+Read the hexadecimal value.
+</div>
+
+<div class="rule">
+<strong>➡️ CONVERT</strong>
+Convert it into denary.
+</div>
+
+<div class="rule">
+<strong>⚡ FAST</strong>
+The faster you answer, the more points you score.
+</div>
+
+</div>
+
+<p style="color:#94a3b8">
+30 questions • Starts at 8 seconds • Gets faster • Instant feedback
+</p>
+
+<h3>Choose difficulty</h3>
+
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+
+<button class="primary" onclick="startGame('easy')">
+Easy
+</button>
+
+<button class="primary" onclick="startGame('medium')">
+Medium
+</button>
+
+<button class="primary" onclick="startGame('hard')">
+Hard
+</button>
+
+</div>
+
+</div>
+
+<div class="card center">
+
+<strong>Key Fact</strong>
+
+<p class="question-text">
+Remember: A=10, B=11, C=12, D=13, E=14, F=15
+</p>
+
+<p class="example">
+1A = 26 • 20 = 32 • 2F = 47
+</p>
+
+</div>
+
+</section>
+
+
+<section id="gameScreen" class="hidden">
+
+<h1>⚔️ Hersey's Hex to Denary Battle</h1>
+
+<p class="subtitle">
+Convert the HEX value into DENARY
+</p>
+
+<div class="stats">
+
+<div class="card stat">
+<span>Score</span>
+<strong id="score">0</strong>
+</div>
+
+<div class="card stat">
+<span>Question</span>
+<strong id="questionNumber">1 / 30</strong>
+</div>
+
+<div class="card stat">
+<span>Time</span>
+<strong id="time">8.0s</strong>
+</div>
+
+<div class="card stat">
+<span>Correct</span>
+<strong id="correct">0</strong>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="timer-header">
+<strong>TIME</strong>
+<span id="timerText">8.0s</span>
+</div>
+
+<div class="timer-bar">
+<div id="timerFill" class="timer-fill"></div>
+</div>
+
+</div>
+
+<div class="card center">
+
+<div id="stage" class="stage">
+Stage 1 — Warm Up
+</div>
+
+<div id="questionType" class="question-type">
+🔢 HEX → DENARY
+</div>
+
+<p class="question-text">
+What is the denary value?
+</p>
+
+<div id="questionValue" class="question-value">
+1A
+</div>
+
+<div id="choices" class="choices"></div>
+
+<div id="feedback" class="feedback"></div>
+
+</div>
+
+</section>
+
+
+<section id="endScreen" class="hidden">
+
+<div class="card center">
+
+<h1>🏆 Game Complete!</h1>
+
+<p class="question-text">
+Final Score
+</p>
+
+<div id="finalScore" class="final-score">
+0
+</div>
+
+<div id="finalPercent" class="final-percent">
+0%
+</div>
+
+<p id="finalStats"></p>
+
+<p id="finalMessage" class="final-message"></p>
+
+<button class="primary" onclick="startGame(currentDifficulty)">
+Play Again
+</button>
+
+</div>
+
+</section>
+
+</div>
+</div>
+
+<script>
+
+let question = 1;
+let score = 0;
+let correct = 0;
+
+let locked = false;
+let timer;
+
+let totalTime;
+let remaining;
+
+let currentQuestion;
+
+let currentDifficulty = "easy";
+
+function $(id){
+return document.getElementById(id);
+}
+
+function random(min,max){
+return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function getTime(){
+
+if(question<=5) return 8;
+if(question<=10) return 7;
+if(question<=15) return 6;
+if(question<=20) return 5;
+
+return 4;
+}
+
+function createQuestion(){
+
+let pool;
+
+if(question<=10){
+
+pool=[
+"A","B","C","D","E","F",
+"10","11","12","14","18","20"
+];
+
+}
+else if(question<=20){
+
+pool=[
+"1A","1F","24","28","2A",
+"2F","30","32","3C","40"
+];
+
+}
+else{
+
+pool=[
+"48","50","5A",
+"64","7F","80","96"
+];
+
+}
+
+let hex = pool[random(0,pool.length-1)];
+
+return {
+hex:hex,
+denary:parseInt(hex,16)
+};
+
+}
+
+function createChoices(correctAnswer){
+
+let answers = new Set();
+
+answers.add(String(correctAnswer));
+
+while(answers.size < 4){
+
+let offset = random(-6,6);
+
+if(offset!==0){
+
+answers.add(
+String(correctAnswer + offset)
+);
+
+}
+
+}
+
+return [...answers]
+.sort(()=>Math.random()-0.5);
+
+}
+
+function startGame(difficulty){
+
+clearInterval(timer);
+
+currentDifficulty = difficulty || "easy";
+
+question = 1;
+score = 0;
+correct = 0;
+
+$("startScreen").classList.add("hidden");
+$("endScreen").classList.add("hidden");
+$("gameScreen").classList.remove("hidden");
+
+$("score").textContent="0";
+$("correct").textContent="0";
+
+nextQuestion();
+
+}
+
+function nextQuestion(){
+
+if(question>30){
+
+endGame();
+return;
+
+}
+
+currentQuestion = createQuestion();
+
+totalTime = getTime();
+remaining = totalTime;
+
+locked = false;
+
+$("questionNumber").textContent =
+question + " / 30";
+
+$("questionType").textContent =
+"🔢 HEX → DENARY";
+
+$("questionValue").textContent =
+currentQuestion.hex;
+
+$("feedback").textContent = "";
+
+if(question<=10){
+$("stage").textContent =
+"Stage 1 — Warm Up";
+}
+else if(question<=20){
+$("stage").textContent =
+"Stage 2 — Intermediate";
+}
+else{
+$("stage").textContent =
+"Stage 3 — GCSE Challenge";
+}
+
+let choices = $("choices");
+choices.innerHTML = "";
+
+let answers =
+createChoices(currentQuestion.denary);
+
+answers.forEach(answer=>{
+
+let button =
+document.createElement("button");
+
+button.className = "choice";
+button.textContent = answer;
+
+button.onclick = function(){
+selectAnswer(answer,button);
+};
+
+choices.appendChild(button);
+
+});
+
+updateTimer();
+
+clearInterval(timer);
+
+timer = setInterval(function(){
+
+remaining -= 0.1;
+
+updateTimer();
+
+if(remaining<=0){
+
+clearInterval(timer);
+timeUp();
+
+}
+
+},100);
+
+}
+
+function updateTimer(){
+
+let display =
+Math.max(0,remaining);
+
+$("time").textContent =
+display.toFixed(1)+"s";
+
+$("timerText").textContent =
+display.toFixed(1)+"s";
+
+$("timerFill").style.width =
+(display/totalTime*100)+"%";
+
+}
+
+function getCorrectAnswer(){
+return String(currentQuestion.denary);
+}
+
+function getExplanation(){
+
+return currentQuestion.hex +
+" (hex) = " +
+currentQuestion.denary +
+" (denary)";
+
+}
+
+function selectAnswer(value,button){
+
+if(locked) return;
+
+locked = true;
+
+clearInterval(timer);
+
+document
+.querySelectorAll(".choice")
+.forEach(btn=>btn.disabled=true);
+
+let correctAnswer =
+getCorrectAnswer();
+
+if(value===correctAnswer){
+
+correct++;
+
+let speedBonus =
+Math.ceil(remaining);
+
+let points =
+10 + speedBonus;
+
+if(currentDifficulty==="medium"){
+points*=2;
+}
+
+if(currentDifficulty==="hard"){
+points*=3;
+}
+
+score += points;
+
+button.classList.add("correct");
+
+$("feedback").innerHTML =
+"✅ Correct! <b>+" +
+points +
+" points</b><br>" +
+getExplanation();
+
+}
+else{
+
+button.classList.add("wrong");
+
+document
+.querySelectorAll(".choice")
+.forEach(btn=>{
+
+if(btn.textContent===correctAnswer){
+btn.classList.add("correct");
+}
+
+});
+
+$("feedback").innerHTML =
+"❌ Not quite.<br>" +
+"The correct answer is <b>" +
+correctAnswer +
+"</b><br>" +
+getExplanation();
+
+}
+
+$("score").textContent=score;
+$("correct").textContent=correct;
+
+setTimeout(function(){
+
+question++;
+nextQuestion();
+
+},1400);
+
+}
+
+function timeUp(){
+
+if(locked) return;
+
+locked = true;
+
+let correctAnswer =
+getCorrectAnswer();
+
+document
+.querySelectorAll(".choice")
+.forEach(btn=>{
+
+btn.disabled=true;
+
+if(btn.textContent===correctAnswer){
+btn.classList.add("correct");
+}
+
+});
+
+$("feedback").innerHTML =
+"⏰ Time's up!<br>" +
+"The correct answer is <b>" +
+correctAnswer +
+"</b><br>" +
+getExplanation();
+
+setTimeout(function(){
+
+question++;
+nextQuestion();
+
+},1600);
+
+}
+
+function endGame(){
+
+clearInterval(timer);
+
+$("gameScreen").classList.add("hidden");
+$("endScreen").classList.remove("hidden");
+
+let percentage =
+Math.round(correct/30*100);
+
+$("finalScore").textContent =
+score;
+
+$("finalPercent").textContent =
+percentage + "%";
+
+$("finalStats").textContent =
+correct + " correct out of 30";
+
+let message;
+
+if(percentage>=90){
+
+message =
+"Excellent hex to denary skills! 🔥";
+
+}
+else if(percentage>=75){
+
+message =
+"Very good work — keep practising!";
+
+}
+else if(percentage>=60){
+
+message =
+"Good effort — remember A=10, B=11, C=12, D=13, E=14 and F=15.";
+
+}
+else{
+
+message =
+"Keep practising your hexadecimal values and try again!";
+
+}
+
+$("finalMessage").textContent =
+message;
+
+}
+
+</script>
+
+</body>
+</html>
