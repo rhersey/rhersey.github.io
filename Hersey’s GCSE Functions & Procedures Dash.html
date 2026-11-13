@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hersey’s GCSE Functions &amp; Procedures Dash</title>
+<style>
+:root{--bg:#fff7ed;--card:#fff;--ink:#231942;--muted:#6b6485;--accent:#7c3aed;--accent2:#ec4899;--accent-ink:#fff;--good:#15803d;--goodbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2;--line:#eadff5;--code:#1e1e2e;--code-ink:#cdd6f4;--kw:#f9a8d4;--s1:95%;--l1:92%;--l2:60%;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#150f28;--card:#211a3a;--ink:#f3eeff;--muted:#b3a9d1;--accent:#a78bfa;--accent2:#f472b6;--accent-ink:#150f28;--good:#86efac;--goodbg:#14301f;--bad:#fca5a5;--badbg:#3a1717;--line:#352b58;--code:#0b0814;--s1:45%;--l1:24%;--l2:62%;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#150f28;--card:#211a3a;--ink:#f3eeff;--muted:#b3a9d1;--accent:#a78bfa;--accent2:#f472b6;--accent-ink:#150f28;--good:#86efac;--goodbg:#14301f;--bad:#fca5a5;--badbg:#3a1717;--line:#352b58;--code:#0b0814;--s1:45%;--l1:24%;--l2:62%;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:1.75rem;line-height:1.15;margin:0 0 4px;background:linear-gradient(90deg,#7c3aed,#ec4899,#f59e0b,#10b981);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 5s ease-in-out infinite alternate}
+@keyframes sh{to{background-position:100% 0}}
+.sub{color:var(--muted);margin:0 0 14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.card h2{font-size:1rem;margin:0 0 8px}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th,td{padding:6px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600}
+code{font-family:ui-monospace,Menlo,Consolas,monospace}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{font:inherit;cursor:pointer;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:12px;text-align:left}
+button small{display:block;color:var(--muted);font-size:.8rem}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.6}
+.mode{background:hsl(var(--h) var(--s1) var(--l1));border-color:hsl(var(--h) 70% var(--l2))}
+.mode b{font-size:1.02rem}
+.mode .best{color:var(--ink);font-weight:600;margin-top:2px}
+.pri{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:0;font-weight:700;text-align:center}
+.ghost{text-align:center;color:var(--muted)}
+.dif{flex:1;text-align:center;font-weight:700}
+.dif.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt{flex:1;text-align:center;font-weight:700;padding:14px 8px;background:hsl(265 var(--s1) var(--l1));border-color:hsl(265 70% var(--l2))}
+.opt+.opt{background:hsl(330 var(--s1) var(--l1));border-color:hsl(330 70% var(--l2))}
+.row{display:flex;gap:10px}
+.bar{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.prog,.tm{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:12px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s}
+.tm{height:12px}
+.tm i{display:block;height:100%;width:100%;background:hsl(120 80% 48%)}
+.q{font-size:1.1rem;font-weight:600;margin:0 0 12px}
+pre{background:var(--code);color:var(--code-ink);padding:12px;border-radius:12px;overflow-x:auto;margin:0 0 12px;font-size:.92rem}
+pre[hidden]{display:none}
+.tab{flex:1;text-align:center;padding:6px;margin-bottom:8px;font-size:.9rem}
+.tab.on{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+input{flex:1;min-width:0;font:inherit;font-size:1.3rem;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+input:focus{outline:none;border-color:var(--accent)}
+.fb{border-radius:12px;padding:12px;margin-top:12px}
+.fb.ok{background:var(--goodbg);color:var(--good)}
+.fb.no{background:var(--badbg);color:var(--bad)}
+.fb p{margin:4px 0 0;color:var(--ink);font-size:.94rem}
+.hint{margin-top:10px;font-size:.92rem;color:var(--muted)}
+.stat{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)}
+.score{font-size:3.2rem;font-weight:800;text-align:center;margin:0;color:var(--accent2)}
+.pop{animation:pop .4s}@keyframes pop{50%{transform:scale(1.05)}}
+.shake{animation:shk .4s}@keyframes shk{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.cf{position:fixed;top:-40px;z-index:20;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const $=s=>document.querySelector(s),ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[ri(0,a.length-1)],TOTAL=10;
+const store={g(k){try{return+localStorage.getItem(k)||0}catch(e){return 0}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let S={},D=store.g("hfp-d"),T=null;
+const py=s=>s.replace(/\bDIV\b/g,"//").replace(/\bMOD\b/g,"%").replace(/\bAND\b/g,"and").replace(/\bOR\b/g,"or");
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const toPy=c=>c.split("\n").map(l=>{let m;
+ if(/^\s*ENDSUBROUTINE/.test(l))return "";
+ if(/^\s*END/.test(l))return null;
+ if(m=l.match(/^(\s*)SUBROUTINE (\w+)\((.*)\)/))return m[1]+"def "+m[2]+"("+m[3]+"):";
+ if(m=l.match(/^(\s*)FOR (\w+) ← (\S+) TO (.+)/))return m[1]+"for "+m[2]+" in range("+m[3]+", "+py(m[4])+" + 1):";
+ if(m=l.match(/^(\s*)IF (.*) THEN/))return m[1]+"if "+py(m[2]).replace(" = "," == ")+":";
+ if(m=l.match(/^(\s*)ELSE\s*$/))return m[1]+"else:";
+ if(m=l.match(/^(\s*)RETURN (.*)/))return m[1]+"return "+py(m[2]);
+ if(m=l.match(/^(\s*)OUTPUT (.*)/))return m[1]+"print("+py(m[2])+")";
+ return py(l.replace("←","="))}).filter(x=>x!==null).join("\n").trim();
+const sub=(n,p,b)=>"SUBROUTINE "+n+"("+p+")\n"+b.map(x=>"  "+x).join("\n")+"\nENDSUBROUTINE\n";
+const Q=(op,c,ans,hint,why,text)=>({kind:"code",op,text:text||"What does this program output?",code:c,pyc:toPy(c),ans,hint,why});
+const FN=[["double","x * 2",x=>x*2],["triple","x * 3",x=>x*3],["square","x * x",x=>x*x],["bonus","x + 10",x=>x+10],["boost","x * 2 + 1",x=>x*2+1]];
+function confetti(n){const e=["🎉","✨","🌟","🎈","🧡","💜"];for(let i=0;i<n;i++){const s=document.createElement("span");s.className="cf";s.textContent=pick(e);s.style.left=ri(0,95)+"%";s.style.fontSize=ri(18,34)+"px";s.style.animationDuration=ri(20,40)/10+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),4500)}}
+
+/* ---------- questions ---------- */
+function call(){const t=D?pick([2,3,3,4,5]):ri(1,4),f=pick(FN),g=pick(FN.filter(z=>z!==f)),k=ri(2,D?9:6),m=ri(2,9),df=sub(f[0],"x",["RETURN "+f[1]]),dg=sub(g[0],"x",["RETURN "+g[1]]),h="Replace each call with the value it returns.";
+ if(t===1){const a=f[2](k);return Q("Call",df+"OUTPUT "+f[0]+"("+k+")",a,h,"The call "+f[0]+"("+k+") passes "+k+" in as x, so it returns "+f[1].replace(/x/g,k)+" = "+a+".")}
+ if(t===2){const a=f[2](k)+m;return Q("Call",df+"result ← "+f[0]+"("+k+")\nOUTPUT result + "+m,a,h,f[0]+"("+k+") returns "+f[2](k)+", which is stored in result. Then "+f[2](k)+" + "+m+" = "+a+".")}
+ if(t===3){const i=g[2](k),a=f[2](i);return Q("Call",df+dg+"OUTPUT "+f[0]+"("+g[0]+"("+k+"))",a,"Work from the inside out: the inner call runs first.",g[0]+"("+k+") = "+i+", then "+f[0]+"("+i+") = "+a+".")}
+ if(t===4){const o=pick([["add","+",(a,b)=>a+b],["subtract","-",(a,b)=>a-b],["multiply","*",(a,b)=>a*b]]),a=o[1]==="-"?ri(5,9):ri(2,9),b=o[1]==="-"?ri(2,4):m,r=o[2](a,b);
+  return Q("Call",sub(o[0],"a, b",["RETURN a "+o[1]+" b"])+"OUTPUT "+o[0]+"("+a+", "+b+")",r,"The first value goes into a and the second into b.","a = "+a+" and b = "+b+", so "+a+" "+o[1]+" "+b+" = "+r+".")}
+ const a=f[2](k)+f[2](m);return Q("Call",df+"OUTPUT "+f[0]+"("+k+") + "+f[0]+"("+m+")",a,"Work out each call separately, then add.",f[0]+"("+k+") = "+f[2](k)+" and "+f[0]+"("+m+") = "+f[2](m)+", total "+a+".")}
+function par(){const t=D?pick([1,2,4,4,5,3]):ri(1,3),k=ri(1,9),m=ri(1,9);
+ if(t===1){const p=ri(1,D?4:3),L=["a","b","c","d"].slice(0,p);return Q("Param",sub("calculate",L.join(", "),["RETURN "+L.join(" + ")]),p,"Parameters are the names inside the brackets of the subroutine header.","The parameters are "+L.join(", ")+", so there are "+p+".","How many parameters does this subroutine have?")}
+ if(t===2)return Q("Param",sub("label","a, b",["RETURN a * 10 + b"])+"OUTPUT label("+k+", "+m+")",k*10+m,"Arguments go to the parameters in order: first to a, second to b.","a = "+k+" and b = "+m+", so "+k+" * 10 + "+m+" = "+(k*10+m)+".");
+ if(t===3){const v=Math.random()<.5;return{kind:"real",op:"Param",text:v?"In the call <code>area(4, 6)</code>, what are 4 and 6 called?":"In the header <code>SUBROUTINE area(w, h)</code>, what are w and h called?",opts:["Parameters","Arguments"],ans:v?1:0,hint:"Parameters are in the subroutine definition. Arguments are the values sent in when it is called.",why:v?"Values sent in when calling are arguments.":"Names in the definition are parameters."}}
+ if(t===4){const p=ri(2,5),q=p+ri(2,6);return Q("Param",sub("subtract","a, b",["RETURN a - b"])+"x ← "+p+"\ny ← "+q+"\nOUTPUT subtract(y, x)",q-p,"The first argument is y, so a takes the value of y.","a = y = "+q+" and b = x = "+p+", so "+q+" - "+p+" = "+(q-p)+".")}
+ return Q("Param",sub("bigger","a, b",["IF a > b THEN","  RETURN a","ELSE","  RETURN b","ENDIF"])+"OUTPUT bigger("+k+", "+m+")",Math.max(k,m),"The subroutine returns whichever parameter is larger.","bigger("+k+", "+m+") returns the larger value, "+Math.max(k,m)+".")}
+function kind(){const t=D?pick([1,2,3,5,5]):ri(1,3),O=["Function","Procedure"],R={kind:"real",op:"Type",opts:O,hint:"A function RETURNs a value to the code that called it. A procedure just does a job, such as OUTPUT, and gives nothing back."};
+ if(t===1){const fn=Math.random()<.5,f=pick(FN),c=fn?sub(f[0],"x",["RETURN "+f[1]]):sub("show","x",["OUTPUT "+f[1]]);
+  return{...R,text:"Is this subroutine a function or a procedure?",code:c,pyc:toPy(c),ans:fn?0:1,why:fn?"It uses RETURN to give a value back, so it is a function.":"It only outputs a value and has no RETURN, so it is a procedure."}}
+ if(t===2){const s=pick([["A subroutine works out a basket total and gives it back so the program can use it.",0],["A subroutine prints a welcome message and returns nothing.",1],["A subroutine used inside an expression, such as <code>cost = double(3) + 1</code>.",0],["A subroutine called on its own line, such as <code>show_menu()</code>.",1]]);
+  return{...R,text:s[0]+" Which is it?",ans:s[1],why:s[1]?"It carries out a task without returning a value: a procedure.":"A value is returned and used by the program: a function."}}
+ if(t===3){const a=ri(2,5),b=ri(2,6),c=sub("countdown","n",["FOR i ← 1 TO n","  OUTPUT i","ENDFOR"])+"countdown("+a+")\ncountdown("+b+")";
+  return Q("Type",c,a+b,"This procedure outputs n numbers each time it is called.","countdown("+a+") outputs "+a+" numbers and countdown("+b+") outputs "+b+": "+(a+b)+" in total.","How many numbers does this program output in total?")}
+ const k=ri(2,9),c=sub("double","x",["RETURN x * 2"])+sub("show","n",["OUTPUT n + 1"])+"show(double("+k+"))";
+ return Q("Type",c,2*k+1,"The function runs first and its returned value is passed into the procedure.","double("+k+") returns "+2*k+". The procedure show prints "+2*k+" + 1 = "+(2*k+1)+".")}
+function scope(){const t=D?pick([2,3,5,5,4]):ri(1,4),g=ri(2,9),n=ri(10,20);
+ if(t===1)return Q("Scope","x ← "+g+"\n"+sub("change","",["x ← "+n,"OUTPUT x"])+"change()\nOUTPUT x",g,"A variable created inside a subroutine is local. It does not change the global one.","The x inside change is a new local variable. The global x is still "+g+".","What is the last number output?");
+ if(t===2){const a=ri(10,30),r=Math.random()<.5;return Q("Scope","total ← "+g*10+"\n"+sub("addBonus","total",["total ← total + 5","RETURN total"])+"result ← addBonus("+a+")\nOUTPUT "+(r?"result":"total"),r?a+5:g*10,"The parameter total is local to the subroutine.",r?"The local total starts as "+a+" and goes up by 5: "+(a+5)+".":"The global total is never changed, so it is still "+g*10+".")}
+ if(t===3){const k=ri(2,9);return Q("Scope","rate ← "+g+"\n"+sub("cost","n",["RETURN n * rate"])+"OUTPUT cost("+k+")",k*g,"A subroutine can read a global variable.","n = "+k+" and rate = "+g+", so "+k+" * "+g+" = "+k*g+".")}
+ if(t===4){const s=pick([["Where can a local variable be used?",["Only inside its subroutine","Anywhere in the program"],0],["A variable created outside every subroutine is…",["Local","Global"],1]]);
+  return{kind:"real",op:"Scope",text:s[0],opts:s[1],ans:s[2],hint:"Local = inside one subroutine only. Global = the whole program.",why:s[2]===0?"A local variable only exists while its subroutine is running.":"Variables outside every subroutine are global."}}
+ const s=ri(1,5),inc=ri(2,6);return Q("Scope",sub("counter","",["count ← "+s,"count ← count + "+inc,"RETURN count"])+"a ← counter()\nb ← counter()\nOUTPUT a + b",2*(s+inc),"Each call creates a brand new local count.","Each call returns "+(s+inc)+" because count is reset each time. "+(s+inc)+" + "+(s+inc)+" = "+2*(s+inc)+".")}
+function trace(){const t=D?pick([1,2,3,5,6,6]):ri(1,4);
+ if(t===1){const n=D?ri(6,12):ri(3,6);return Q("Trace",sub("total","n",["t ← 0","FOR i ← 1 TO n","  t ← t + i","ENDFOR","RETURN t"])+"OUTPUT total("+n+")",n*(n+1)/2,"Add 1 + 2 + … up to n.","It adds 1 to "+n+": "+Array.from({length:n},(_,i)=>i+1).join(" + ")+" = "+n*(n+1)/2+".")}
+ if(t===2){const v=[ri(1,20),ri(1,20),ri(1,20),ri(1,20)],a=Math.max(v[0],v[1])+Math.max(v[2],v[3]);return Q("Trace",sub("larger","a, b",["IF a > b THEN","  RETURN a","ELSE","  RETURN b","ENDIF"])+"OUTPUT larger("+v[0]+", "+v[1]+") + larger("+v[2]+", "+v[3]+")",a,"Each call returns the bigger of its two arguments.","larger("+v[0]+", "+v[1]+") = "+Math.max(v[0],v[1])+" and larger("+v[2]+", "+v[3]+") = "+Math.max(v[2],v[3])+", total "+a+".")}
+ if(t===3){const a=ri(2,5),b=ri(2,6);return Q("Trace",sub("countdown","n",["FOR i ← 1 TO n","  OUTPUT i","ENDFOR"])+"countdown("+a+")\ncountdown("+b+")",a+b,"Each call outputs n numbers.","countdown("+a+") outputs "+a+" numbers and countdown("+b+") outputs "+b+": "+(a+b)+" in total.","How many numbers does this program output in total?")}
+ if(t===4){const a=ri(10,99),b=ri(10,99);return Q("Trace",sub("lastDigit","n",["RETURN n MOD 10"])+"OUTPUT lastDigit("+a+") + lastDigit("+b+")",a%10+b%10,"n MOD 10 gives the last digit.","lastDigit("+a+") = "+a%10+" and lastDigit("+b+") = "+b%10+", total "+(a%10+b%10)+".")}
+ if(t===5){const b=ri(2,4),e=ri(2,4);return Q("Trace",sub("power","base, exp",["result ← 1","FOR i ← 1 TO exp","  result ← result * base","ENDFOR","RETURN result"])+"OUTPUT power("+b+", "+e+")",Math.pow(b,e),"result is multiplied by base, exp times.","It multiplies by "+b+", "+e+" times: "+b+"^"+e+" = "+Math.pow(b,e)+".")}
+ const k=ri(2,5),n=2*k;return Q("Trace",sub("double","x",["RETURN x * 2"])+sub("total","n",["t ← 0","FOR i ← 1 TO n","  t ← t + i","ENDFOR","RETURN t"])+"OUTPUT total(double("+k+"))",n*(n+1)/2,"The inner call double("+k+") runs first, then its result goes into total.","double("+k+") = "+n+", then total("+n+") adds 1 to "+n+" = "+n*(n+1)/2+".")}
+const MODES={
+ call:{n:"Calling 📞",d:"Work out a function call",h:265,g:call},
+ par:{n:"Parameters 🎯",d:"Arguments and order",h:330,g:par},
+ kind:{n:"Function or procedure? ⚖️",d:"Return a value or not",h:190,g:kind},
+ scope:{n:"Scope 🔭",d:"Local and global variables",h:35,g:scope},
+ code:{n:"Code tracing 💻",d:"Loops, IFs, nested calls",h:150,g:()=>pick([trace,call,scope])()},
+ boss:{n:"Challenge 🏆",d:"Everything mixed",h:15,g:()=>pick([call,par,kind,scope,trace])()}};
+const TOP={Call:"Calling functions",Param:"Parameters and arguments",Type:"Function or procedure",Scope:"Local and global",Trace:"Tracing programs"};
+
+/* ---------- screens ---------- */
+function menu(){clearInterval(T);S={};
+ $("#app").innerHTML=`<h1>🛠️ Hersey’s GCSE Functions &amp; Procedures Dash</h1>
+ <p class="sub">GCSE Computer Science · Subroutines in Python · 10 questions · beat the clock!</p>
+ <div class="row" style="margin-bottom:14px"><button class="dif ${D?"":"on"}" data-d="0">🌱 Easy</button><button class="dif ${D?"on":""}" data-d="1">🔥 Hard</button></div>
+ <div class="card"><h2>Quick reminder</h2>
+ <table><tr><th></th><th>Python 🐍</th><th>Exam reference language</th></tr>
+ <tr><td>Define</td><td><code>def double(x):</code></td><td><code>SUBROUTINE double(x)</code></td></tr>
+ <tr><td>Give back</td><td><code>return x * 2</code></td><td><code>RETURN x * 2</code></td></tr>
+ <tr><td>Show</td><td><code>print(x)</code></td><td><code>OUTPUT x</code></td></tr>
+ <tr><td>Call</td><td><code>y = double(4)</code></td><td><code>y ← double(4)</code></td></tr></table>
+ <p class="hint" style="margin-bottom:0">A <b>function</b> returns a value. A <b>procedure</b> just does a job (like printing) and returns nothing.</p></div>
+ <div class="grid">${Object.keys(MODES).map(k=>{const m=MODES[k],b=store.g("hfp-"+D+"-"+k);return`<button class="mode" style="--h:${m.h}" data-m="${k}"><b>${m.n}</b><small>${m.d}</small><div class="best">${b?"🏅 Best: "+b:"No score yet"}</div></button>`}).join("")}</div>`;
+ document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>start(b.dataset.m));
+ document.querySelectorAll(".dif").forEach(b=>b.onclick=()=>{D=+b.dataset.d;store.s("hfp-d",D);menu()})}
+function start(m){S={m,i:0,score:0,streak:0,best:0,right:0,st:{Call:[0,0],Param:[0,0],Type:[0,0],Scope:[0,0],Trace:[0,0]}};next()}
+function next(){clearInterval(T);if(S.i>=TOTAL)return end();
+ const q=S.q=MODES[S.m].g();S.done=false;S.hint=false;S.i++;
+ q.t={calc:[25,15],real:[40,30],code:[75,55]}[q.kind][D];
+ const hl=s=>esc(s).replace(/\b(SUBROUTINE|ENDSUBROUTINE|RETURN|OUTPUT|IF|THEN|ELSE|ENDIF|FOR|TO|ENDFOR|DIV|MOD)\b/g,'<b style="color:var(--kw)">$1</b>');
+ const codeBlock=!q.code?"":`<div class="row"><button class="tab on" data-t="1">🐍 Python</button><button class="tab" data-t="0">Exam reference language</button></div><pre id="p0" hidden>${hl(q.code)}</pre><pre id="p1">${esc(q.pyc)}</pre>`;
+ const inp=q.opts?`<div class="row">${q.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")}</div>`:`<div class="row"><input id="ans" type="number" inputmode="numeric" placeholder="Your answer" autocomplete="off"><button class="pri" id="chk">Check</button></div>`;
+ $("#app").innerHTML=`<div class="bar"><span>Question ${S.i}/${TOTAL} · ${D?"Hard 🔥":"Easy 🌱"}</span><span>⭐ ${S.score} &nbsp; 🔥 ${S.streak}</span></div>
+ <div class="prog"><i style="width:${(S.i-1)/TOTAL*100}%"></i></div>
+ <div class="card"><div class="tm"><i id="tb"></i></div><div class="bar" style="margin:-6px 0 6px"><span></span><span id="tn">${q.t}s</span></div>
+ <p class="q">${q.text}</p>
+ ${codeBlock}
+ ${inp}
+ <div id="fb"></div>
+ <div class="row" style="margin-top:10px"><button class="ghost" id="hb" style="flex:1">💡 Hint (half points)</button><button class="ghost" id="qb">Quit</button></div><div id="hint"></div></div>`;
+ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===b));$("#p0").hidden=b.dataset.t==="1";$("#p1").hidden=b.dataset.t==="0"});
+ if(q.opts)document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>finish(+b.dataset.i===q.ans));
+ else{$("#chk").onclick=()=>{const v=$("#ans").value.trim();if(v!=="")finish(Number(v)===q.ans)};$("#ans").onkeydown=e=>{if(e.key==="Enter")$("#chk").click()};$("#ans").focus()}
+ $("#hb").onclick=()=>{S.hint=true;$("#hint").innerHTML='<div class="hint">💡 '+q.hint+'</div>'};
+ $("#qb").onclick=menu;
+ S.t0=Date.now();S.rem=q.t;
+ T=setInterval(()=>{const e=Math.max(0,q.t-(Date.now()-S.t0)/1000),f=e/q.t;S.rem=e;$("#tb").style.width=f*100+"%";$("#tb").style.background="hsl("+Math.round(f*120)+" 80% 48%)";$("#tn").textContent=Math.ceil(e)+"s";if(e<=0)finish(false,true)},100)}
+function finish(ok,to){if(S.done)return;S.done=true;clearInterval(T);
+ const q=S.q,t=S.st[q.op],A=q.opts?q.opts[q.ans]:q.ans;t[1]++;let m;
+ if(ok){t[0]++;S.right++;S.streak++;S.best=Math.max(S.best,S.streak);
+  const base=(D?20:10)/(S.hint?2:1),sb=S.hint?0:Math.min(S.streak-1,5),tb=S.hint?0:Math.round(5*S.rem/q.t),pts=base+sb+tb;S.score+=pts;
+  m='<div class="fb ok pop"><b>✅ Correct! +'+pts+'</b><br><small>'+base+' base'+(sb?' + '+sb+' streak':'')+(tb?' + '+tb+' speed':'')+'</small><p>'+q.why+'</p></div>';
+  if(S.streak%5===0)confetti(14)}
+ else{S.streak=0;m='<div class="fb no shake"><b>'+(to?"⏰ Time’s up! ":"❌ Not quite. ")+'The answer is '+A+'.</b><p>'+q.why+'</p></div>'}
+ $("#fb").innerHTML=m+'<button class="pri" id="nx" style="width:100%;margin-top:12px">'+(S.i>=TOTAL?"See results":"Next question")+'</button>';
+ if($("#ans")){$("#ans").disabled=true;$("#chk").disabled=true}
+ document.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.dataset.i===q.ans)b.style.outline="3px solid var(--good)"});
+ $("#hb").disabled=true;$("#nx").onclick=next;$("#nx").focus()}
+function end(){const pct=S.right*10,key="hfp-"+D+"-"+S.m,old=store.g(key),nh=S.score>old;if(nh)store.s(key,S.score);
+ if(nh||pct===100)confetti(40);
+ const msg=pct===100?"Perfect! Exam ready. 🏆":pct>=80?"Great work, nearly there! 🎉":pct>=50?"Good progress. Keep practising! 💪":"Keep going. Use the hints and read the working! 🌱";
+ const rows=Object.entries(S.st).filter(([k,v])=>v[1]>0).map(([k,v])=>`<div class="stat"><span>${TOP[k]}</span><b>${v[0]}/${v[1]}</b></div>`).join("");
+ $("#app").innerHTML=`<h1>Round complete!</h1><p class="sub">${MODES[S.m].n} · ${D?"Hard 🔥":"Easy 🌱"}</p>
+ <div class="card"><p class="score">${S.score}</p><p style="text-align:center;margin:0 0 6px">points</p>
+ <p style="text-align:center;font-weight:700;margin:0 0 12px">${nh?"🏆 New high score!":"🏅 High score: "+old}</p>
+ <div class="stat"><span>Correct</span><b>${S.right}/${TOTAL} (${pct}%)</b></div><div class="stat"><span>Best streak</span><b>🔥 ${S.best}</b></div>${rows}
+ <p style="margin-bottom:0">${msg}</p></div>
+ <div class="row"><button class="pri" id="again" style="flex:1">Play again</button><button id="mn" style="flex:1;text-align:center">Menu</button></div>`;
+ $("#again").onclick=()=>start(S.m);$("#mn").onclick=menu}
+menu();
+</script>
+</body>
+</html>
