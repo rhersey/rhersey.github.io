@@ -13,7 +13,7 @@
 }
 
 body {
-    font-family: "Segoe UI", sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background: #0b1020;
     color: white;
     line-height: 1.6;
@@ -22,7 +22,7 @@ body {
 /* HEADER */
 
 header {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    background: linear-gradient(135deg,#00c6ff,#0072ff);
     text-align: center;
     padding: 80px 20px;
 }
@@ -43,13 +43,15 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 }
 
 .menu {
     display: flex;
     justify-content: center;
+    align-items: center;
     list-style: none;
+    flex-wrap: wrap;
 }
 
 .menu > li {
@@ -58,9 +60,9 @@ nav {
 
 .menu a {
     display: block;
-    padding: 16px 24px;
-    text-decoration: none;
+    padding: 15px 20px;
     color: white;
+    text-decoration: none;
     transition: 0.3s;
 }
 
@@ -75,12 +77,12 @@ nav {
     display: none;
     position: absolute;
     background: #1b2738;
-    min-width: 280px;
+    min-width: 320px;
     list-style: none;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
-.dropdown-content li a {
+.dropdown-content a {
     padding: 12px 15px;
 }
 
@@ -88,7 +90,7 @@ nav {
     display: block;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 
 .container {
     max-width: 1200px;
@@ -115,21 +117,17 @@ nav {
     background: #182338;
     border-radius: 20px;
     padding: 25px;
-    border: 1px solid #2a4268;
-    transition: all 0.3s ease;
+    border: 1px solid #2d4468;
+    transition: 0.3s;
 }
 
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 0 25px rgba(79,195,247,.5);
+    box-shadow: 0 0 25px rgba(79,195,247,.45);
 }
 
 .card h3 {
     margin-bottom: 10px;
-}
-
-.card p {
-    color: #d6d6d6;
 }
 
 .card a {
@@ -143,13 +141,17 @@ nav {
     font-weight: bold;
 }
 
-/* CATEGORY SECTIONS */
+.card a:hover {
+    background: white;
+}
+
+/* TOPIC SECTIONS */
 
 .topic-grid {
-    margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     gap: 25px;
+    margin-top: 50px;
 }
 
 .topic {
@@ -183,8 +185,8 @@ nav {
 /* FOOTER */
 
 footer {
-    text-align: center;
     background: #131d2c;
+    text-align: center;
     padding: 25px;
     margin-top: 50px;
     color: #bbb;
@@ -220,44 +222,148 @@ footer {
 <nav>
 <ul class="menu">
 
-    <li><a href="#">🏠 Home</a></li>
+<li>
+<a href="index.html" target="_blank" rel="noopener noreferrer">
+🏠 Home
+</a>
+</li>
 
-    <li class="dropdown">
-        <a href="#">🌐 Networks ▼</a>
-        <ul class="dropdown-content">
-            <li><a href="gcse_networks_simulator.html">📡 Network Simulator</a></li>
-            <li><a href="https://net-build-go.base44.app" target="_blank">🔀 Switches & Routers Challenge</a></li>
-        </ul>
-    </li>
+<li class="dropdown">
+<a href="#">🌐 Networks ▼</a>
+<ul class="dropdown-content">
 
-    <li class="dropdown">
-        <a href="#">🔢 Data Representation ▼</a>
-        <ul class="dropdown-content">
-            <li><a href="https://gigabyte-guru.lovable.app/" target="_blank">🧮 Byte Battle</a></li>
-            <li><a href="herseysdatasizegame.html">⚔️ Hersey Data Size Battle</a></li>
-            <li><a href="https://learningcontent.cisco.com/games/binary/index.html" target="_blank">💡 Binary Game</a></li>
-            <li><a href="herseysbinaryshiftbattle.html">🎯 Binary Shift Battle</a></li>
-            <li><a href="https://digit-dreamer-game.lovable.app/" target="_blank">➕ Binary Addition Tester</a></li>
-            <li><a href="hex_den">🔤 HEX → Denary</a></li>
-            <li><a href="den_hex">🔠 Denary → HEX</a></li>
-            <li><a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">👾 HEX Invaders</a></li>
-            <li><a href="herseyshexbinarybattle.html">⚡ HEX Binary Battle</a></li>
-            <li><a href="https://bit-baker.lovable.app/" target="_blank">🎵 Sound Representation</a></li>
-            <li><a href="https://mr-herseys-bit-magic.lovable.app/" target="_blank">🖼 Image Representation</a></li>
-        </ul>
-    </li>
+<li>
+<a href="gcse_networks_simulator.html" target="_blank" rel="noopener noreferrer">
+📡 Network Simulator
+</a>
+</li>
 
-    <li class="dropdown">
-        <a href="#">💻 Programming ▼</a>
-        <ul class="dropdown-content">
-            <li><a href="Herseysscratchcard.html">📁 Reading External Files</a></li>
-            <li><a href="div_mod_dash.html">➗ DIV & MOD Dash</a></li>
-            <li><a href="Hersey’s GCSE Arrays & Lists Dash.html">📚 Arrays & Lists Dash</a></li>
-            <li><a href="Hersey’s GCSE Flowcharts Dash.html">🔀 Flowcharts Dash</a></li>
-            <li><a href="Hersey’s GCSE Functions & Procedures Dash.html">⚙️ Functions & Procedures Dash</a></li>
-            <li><a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank">🗄 SQL Zoo</a></li>
-        </ul>
-    </li>
+<li>
+<a href="https://net-build-go.base44.app" target="_blank" rel="noopener noreferrer">
+🔀 Switches & Routers Challenge
+</a>
+</li>
+
+</ul>
+</li>
+
+<li class="dropdown">
+<a href="#">🔢 Data Representation ▼</a>
+
+<ul class="dropdown-content">
+
+<li>
+<a href="https://gigabyte-guru.lovable.app/" target="_blank" rel="noopener noreferrer">
+🧮 Byte Battle
+</a>
+</li>
+
+<li>
+<a href="herseysdatasizegame.html" target="_blank" rel="noopener noreferrer">
+⚔️ Hersey's Data Size Battle
+</a>
+</li>
+
+<li>
+<a href="https://learningcontent.cisco.com/games/binary/index.html" target="_blank" rel="noopener noreferrer">
+💡 Binary Game
+</a>
+</li>
+
+<li>
+<a href="herseysbinaryshiftbattle.html" target="_blank" rel="noopener noreferrer">
+🎯 Binary Shift Battle
+</a>
+</li>
+
+<li>
+<a href="https://digit-dreamer-game.lovable.app/" target="_blank" rel="noopener noreferrer">
+➕ Binary Addition Tester
+</a>
+</li>
+
+<li>
+<a href="hex_den" target="_blank" rel="noopener noreferrer">
+🔤 HEX to Denary
+</a>
+</li>
+
+<li>
+<a href="den_hex" target="_blank" rel="noopener noreferrer">
+🔠 Denary to HEX
+</a>
+</li>
+
+<li>
+<a href="https://hex-invader-d18b0d93.base44.app/" target="_blank" rel="noopener noreferrer">
+👾 HEX Invaders
+</a>
+</li>
+
+<li>
+<a href="herseyshexbinarybattle.html" target="_blank" rel="noopener noreferrer">
+⚡ HEX Binary Battle
+</a>
+</li>
+
+<li>
+<a href="https://bit-baker.lovable.app/" target="_blank" rel="noopener noreferrer">
+🎵 Sound Representation
+</a>
+</li>
+
+<li>
+<a href="https://mr-herseys-bit-magic.lovable.app/" target="_blank" rel="noopener noreferrer">
+🖼 Image Representation
+</a>
+</li>
+
+</ul>
+</li>
+
+<li class="dropdown">
+<a href="#">💻 Programming ▼</a>
+
+<ul class="dropdown-content">
+
+<li>
+<a href="Herseysscratchcard.html" target="_blank" rel="noopener noreferrer">
+📁 Reading External Files
+</a>
+</li>
+
+<li>
+<a href="div_mod_dash.html" target="_blank" rel="noopener noreferrer">
+➗ DIV & MOD Dash
+</a>
+</li>
+
+<li>
+<a href="Hersey’s GCSE Arrays & Lists Dash.html" target="_blank" rel="noopener noreferrer">
+📚 Arrays & Lists Dash
+</a>
+</li>
+
+<li>
+<a href="Hersey’s GCSE Flowcharts Dash.html" target="_blank" rel="noopener noreferrer">
+🔀 Flowcharts Dash
+</a>
+</li>
+
+<li>
+<a href="Hersey’s GCSE Functions & Procedures Dash.html" target="_blank" rel="noopener noreferrer">
+⚙️ Functions & Procedures Dash
+</a>
+</li>
+
+<li>
+<a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank" rel="noopener noreferrer">
+🗄 SQL Zoo
+</a>
+</li>
+
+</ul>
+</li>
 
 </ul>
 </nav>
@@ -269,21 +375,27 @@ footer {
 <div class="card-grid">
 
 <div class="card">
-    <h3>🎯 Binary Shift Battle</h3>
-    <p>Test your binary shifting skills and race against the clock.</p>
-    <a href="herseysbinaryshiftbattle.html">Play Now</a>
+<h3>🎯 Binary Shift Battle</h3>
+<p>Practise binary shifts and powers of two against the clock.</p>
+<a href="herseysbinaryshiftbattle.html" target="_blank" rel="noopener noreferrer">
+Play Now
+</a>
 </div>
 
 <div class="card">
-    <h3>👾 HEX Invaders</h3>
-    <p>Defend the computer system using your hexadecimal knowledge.</p>
-    <a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">Play Now</a>
+<h3>👾 HEX Invaders</h3>
+<p>Fight off invading numbers with your hexadecimal skills.</p>
+<a href="https://hex-invader-d18b0d93.base44.app/" target="_blank" rel="noopener noreferrer">
+Play Now
+</a>
 </div>
 
 <div class="card">
-    <h3>🧮 Byte Battle</h3>
-    <p>Master data sizes from bytes to terabytes through challenges.</p>
-    <a href="herseysdatasizegame.html">Play Now</a>
+<h3>🧮 Byte Battle</h3>
+<p>Master KB, MB, GB and TB conversions through gameplay.</p>
+<a href="herseysdatasizegame.html" target="_blank" rel="noopener noreferrer">
+Play Now
+</a>
 </div>
 
 </div>
@@ -291,35 +403,86 @@ footer {
 <div class="topic-grid">
 
 <div class="topic">
-    <h2>🌐 Networks</h2>
-    <ul>
-        <li><a href="gcse_networks_simulator.html">📡 Network Simulator</a></li>
-        <li><a href="https://net-build-go.base44.app" target="_blank">🔀 Switches & Routers</a></li>
-    </ul>
+<h2>🌐 Networks</h2>
+<ul>
+
+<li>
+<a href="gcse_networks_simulator.html" target="_blank" rel="noopener noreferrer">
+📡 Network Simulator
+</a>
+</li>
+
+<li>
+<a href="https://net-build-go.base44.app" target="_blank" rel="noopener noreferrer">
+🔀 Switches & Routers Challenge
+</a>
+</li>
+
+</ul>
 </div>
 
 <div class="topic">
-    <h2>🔢 Data Representation</h2>
-    <ul>
-        <li><a href="herseysdatasizegame.html">🧮 Byte Battle</a></li>
-        <li><a href="herseysbinaryshiftbattle.html">🎯 Binary Shift Battle</a></li>
-        <li><a href="herseyshexbinarybattle.html">⚡ HEX Binary Battle</a></li>
-        <li><a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">👾 HEX Invaders</a></li>
-        <li><a href="hex_den">🔤 HEX → Denary</a></li>
-        <li><a href="den_hex">🔠 Denary → HEX</a></li>
-    </ul>
+<h2>🔢 Data Representation</h2>
+<ul>
+
+<li><a href="herseysdatasizegame.html" target="_blank" rel="noopener noreferrer">🧮 Byte Battle</a></li>
+
+<li><a href="herseysbinaryshiftbattle.html" target="_blank" rel="noopener noreferrer">🎯 Binary Shift Battle</a></li>
+
+<li><a href="herseyshexbinarybattle.html" target="_blank" rel="noopener noreferrer">⚡ HEX Binary Battle</a></li>
+
+<li><a href="https://hex-invader-d18b0d93.base44.app/" target="_blank" rel="noopener noreferrer">👾 HEX Invaders</a></li>
+
+<li><a href="hex_den" target="_blank" rel="noopener noreferrer">🔤 HEX to Denary</a></li>
+
+<li><a href="den_hex" target="_blank" rel="noopener noreferrer">🔠 Denary to HEX</a></li>
+
+</ul>
 </div>
 
 <div class="topic">
-    <h2>💻 Programming Fundamentals</h2>
-    <ul>
-        <li><a href="Herseysscratchcard.html">📁 External Files</a></li>
-        <li><a href="div_mod_dash.html">➗ DIV & MOD Dash</a></li>
-        <li><a href="Hersey’s GCSE Arrays & Lists Dash.html">📚 Arrays & Lists</a></li>
-        <li><a href="Hersey’s GCSE Flowcharts Dash.html">🔀 Flowcharts</a></li>
-        <li><a href="Hersey’s GCSE Functions & Procedures Dash.html">⚙️ Functions</a></li>
-        <li><a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank">🗄 SQL Zoo</a></li>
-    </ul>
+<h2>💻 Programming Fundamentals</h2>
+
+<ul>
+
+<li>
+<a href="Herseysscratchcard.html" target="_blank" rel="noopener noreferrer">
+📁 Reading External Files
+</a>
+</li>
+
+<li>
+<a href="div_mod_dash.html" target="_blank" rel="noopener noreferrer">
+➗ DIV & MOD Dash
+</a>
+</li>
+
+<li>
+<a href="Hersey’s GCSE Arrays & Lists Dash.html" target="_blank" rel="noopener noreferrer">
+📚 Arrays & Lists Dash
+</a>
+</li>
+
+<li>
+<a href="Hersey’s GCSE Flowcharts Dash.html" target="_blank" rel="noopener noreferrer">
+🔀 Flowcharts Dash
+</a>
+</li>
+
+<li>
+<a href="Hersey’s GCSE Functions & Procedures Dash.html" target="_blank" rel="noopener noreferrer">
+⚙️ Functions & Procedures Dash
+</a>
+</li>
+
+<li>
+<a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank" rel="noopener noreferrer">
+🗄 SQL Zoo
+</a>
+</li>
+
+</ul>
+
 </div>
 
 </div>
@@ -327,13 +490,8 @@ footer {
 </div>
 
 <footer>
-    © 2026 Mr Hersey · Hosted on GitHub Pages
+© 2026 Mr Hersey · Hosted on GitHub Pages
 </footer>
-<script>
-document.querySelectorAll('a').forEach(link => {
-    link.setAttribute('target', '_blank');
-    link.setAttribute('rel', 'noopener noreferrer');
-});
-</script>
+
 </body>
 </html>
