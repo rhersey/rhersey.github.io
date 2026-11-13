@@ -1,198 +1,334 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mr Hersey's Computer Science</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b1020;
-      color: #f5f5f5;
-      margin: 0;
-      padding: 0;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mr Hersey's Computer Science Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #0b1020;
+    color: white;
+    line-height: 1.6;
+}
+
+/* HEADER */
+
+header {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    text-align: center;
+    padding: 80px 20px;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+/* NAVIGATION */
+
+nav {
+    background: #131d2c;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu a {
+    display: block;
+    padding: 16px 24px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: #4fc3f7;
+    color: black;
+}
+
+/* DROPDOWNS */
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #1b2738;
+    min-width: 280px;
+    list-style: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+.dropdown-content li a {
+    padding: 12px 15px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* MAIN CONTENT */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.section-title {
+    text-align: center;
+    color: #4fc3f7;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* FEATURED CARDS */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 25px;
+}
+
+.card {
+    background: #182338;
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid #2a4268;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(79,195,247,.5);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #d6d6d6;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 15px;
+    background: #4fc3f7;
+    color: black;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* CATEGORY SECTIONS */
+
+.topic-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 25px;
+}
+
+.topic {
+    background: #162132;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.topic h2 {
+    color: #4fc3f7;
+    margin-bottom: 15px;
+}
+
+.topic ul {
+    list-style: none;
+}
+
+.topic li {
+    margin: 10px 0;
+}
+
+.topic a {
+    color: white;
+    text-decoration: none;
+}
+
+.topic a:hover {
+    color: #4fc3f7;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    background: #131d2c;
+    padding: 25px;
+    margin-top: 50px;
+    color: #bbb;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .menu {
+        flex-direction: column;
     }
-    header {
-      background: #1e2a3a; 
-      padding: 20px;
-      text-align: center;
+
+    .dropdown-content {
+        position: relative;
+        width: 100%;
     }
-    h1 {
-      margin: 0;
+
+    header h1 {
+        font-size: 2rem;
     }
-    main {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-    .intro {
-      margin-bottom: 20px;
-    }
-    ul.links {
-      list-style: none;
-      padding: 0;
-    }
-    ul.links li {
-      margin: 10px 0;
-    }
-    ul.links a {
-      color: #4fc3f7;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    ul.links a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-      color: #bbbbbb;
-    }
-  </style>
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Mr Hersey's Computer Science</h1>
-    <p>Resources/ games for curious committed computer scientists</p>
-  </header>
 
-  <main>
-    <section class="intro">
-      <p>Welcome! Explore these computer science websites to deepen your understanding and stretch your thinking.</p>
-    </section>
+<header>
+    <h1>🚀 Mr Hersey's Computer Science Hub</h1>
+    <p>Games • Challenges • GCSE Revision • Interactive Learning</p>
+</header>
 
-    <section>
-      <h2>Useful Computer Science Links</h2>
-      <ul class="links">
-        <li>
-          <a href="gcse_networks_simulator.html" target="_blank">
-            Networks: Network simulator
-          </a>
-        </li>
-        <li>
-          <a href="https://net-build-go.base44.app" target="_blank">
-            Networks: Switches and routers
-          </a>
-        </li>
-        <li>
-          <a href="https://logic-leveler.lovable.app/" target="_blank">
-            Logic gate: GATE RUSH
-          </a>
-        </li>
-        <li>
-          <a href="https://gigabyte-guru.lovable.app/" target="_blank">
-            Data representation: Sizes - BYTEBATTLE
-          </a>
-        </li>
-            <li>
-          <a href="herseysdatasizegame.html" target="_blank">
-            Data representation: Sizes - Hersey's Battle game
-          </a>
-        </li>
-           <li>
-          <a href="https://learningcontent.cisco.com/games/binary/index.html" target="_blank">
-            Data representation: Binary game
-          </a>
-        </li>
+<nav>
+<ul class="menu">
 
-                  <li>
-          <a href="herseysbinaryshiftbattle.html" target="_blank">
-            Data representation: Binary shift game
-          </a>
-        </li>
+    <li><a href="#">🏠 Home</a></li>
 
-        
-        <li>
-          <a href="https://digit-dreamer-game.lovable.app/" target="_blank">
-            Data representation: Binary addition tester
-          </a>
-        </li>
-                             <li>
-          <a href="hex_den" target="_blank">
-            Data representation: HEX to Denary game
-          </a>
-        </li>
+    <li class="dropdown">
+        <a href="#">🌐 Networks ▼</a>
+        <ul class="dropdown-content">
+            <li><a href="gcse_networks_simulator.html">📡 Network Simulator</a></li>
+            <li><a href="https://net-build-go.base44.app" target="_blank">🔀 Switches & Routers Challenge</a></li>
+        </ul>
+    </li>
 
-        
-                        <li>
-          <a href="den_hex" target="_blank">
-            Data representation: Denary to HEX game
-          </a>
-        </li>
+    <li class="dropdown">
+        <a href="#">🔢 Data Representation ▼</a>
+        <ul class="dropdown-content">
+            <li><a href="https://gigabyte-guru.lovable.app/" target="_blank">🧮 Byte Battle</a></li>
+            <li><a href="herseysdatasizegame.html">⚔️ Hersey Data Size Battle</a></li>
+            <li><a href="https://learningcontent.cisco.com/games/binary/index.html" target="_blank">💡 Binary Game</a></li>
+            <li><a href="herseysbinaryshiftbattle.html">🎯 Binary Shift Battle</a></li>
+            <li><a href="https://digit-dreamer-game.lovable.app/" target="_blank">➕ Binary Addition Tester</a></li>
+            <li><a href="hex_den">🔤 HEX → Denary</a></li>
+            <li><a href="den_hex">🔠 Denary → HEX</a></li>
+            <li><a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">👾 HEX Invaders</a></li>
+            <li><a href="herseyshexbinarybattle.html">⚡ HEX Binary Battle</a></li>
+            <li><a href="https://bit-baker.lovable.app/" target="_blank">🎵 Sound Representation</a></li>
+            <li><a href="https://mr-herseys-bit-magic.lovable.app/" target="_blank">🖼 Image Representation</a></li>
+        </ul>
+    </li>
 
-        
-                       <li>
-          <a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">
-            Data representation: HEX invaders
-          </a>
-        </li>
-               <li>
-          <a href="herseyshexbinarybattle.html" target="_blank">
-            Data representation: HEX Binary battle
-          </a>
-        </li>
+    <li class="dropdown">
+        <a href="#">💻 Programming ▼</a>
+        <ul class="dropdown-content">
+            <li><a href="Herseysscratchcard.html">📁 Reading External Files</a></li>
+            <li><a href="div_mod_dash.html">➗ DIV & MOD Dash</a></li>
+            <li><a href="Hersey’s GCSE Arrays & Lists Dash.html">📚 Arrays & Lists Dash</a></li>
+            <li><a href="Hersey’s GCSE Flowcharts Dash.html">🔀 Flowcharts Dash</a></li>
+            <li><a href="Hersey’s GCSE Functions & Procedures Dash.html">⚙️ Functions & Procedures Dash</a></li>
+            <li><a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank">🗄 SQL Zoo</a></li>
+        </ul>
+    </li>
 
-        
-                </li>
-                <li>
-          <a href="https://bit-baker.lovable.app/" target="_blank">
-           Data representation: sound
-          </a>
-        </li>
-                </li>
-                <li>
-          <a href="https://mr-herseys-bit-magic.lovable.app/" target="_blank">
-            Data representation: images
-          </a>
-        </li>
-        <li>
-          <a href="Herseysscratchcard.html" target="_blank">
-            Programming fundamentals: Reading an external file
-          </a>
-        </li>
+</ul>
+</nav>
 
+<div class="container">
 
-          <li>
-               <a href="div_mod_dash.html" target="_blank">
-            Programming fundamentals: Hersey's DIV & MOD dash
-          </a>
-        </li>
-        
+<h2 class="section-title">⭐ Featured Games</h2>
 
-          <li>
-               <a href="Hersey’s GCSE Arrays & Lists Dash.html" target="_blank">
-            Programming fundamentals: Hersey’s GCSE Arrays & Lists Dash
-          </a>
-        </li>
+<div class="card-grid">
 
-          <li>
-               <a href="Hersey’s GCSE Flowcharts Dash.html" target="_blank">
-            Programming fundamentals: Hersey’s GCSE Flowcharts Dash
-          </a>
-        </li>
+<div class="card">
+    <h3>🎯 Binary Shift Battle</h3>
+    <p>Test your binary shifting skills and race against the clock.</p>
+    <a href="herseysbinaryshiftbattle.html">Play Now</a>
+</div>
 
-          <li>
-               <a href="Hersey’s GCSE Functions & Procedures Dash.html" target="_blank">
-            Programming fundamentals: Hersey’s GCSE Functions & Procedures Dash
-          </a>
-        </li>
+<div class="card">
+    <h3>👾 HEX Invaders</h3>
+    <p>Defend the computer system using your hexadecimal knowledge.</p>
+    <a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">Play Now</a>
+</div>
 
-        
-        <li>
-          <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank">
-            Programming fundamentals: SQL zoo
-          </a>
-        </li>
+<div class="card">
+    <h3>🧮 Byte Battle</h3>
+    <p>Master data sizes from bytes to terabytes through challenges.</p>
+    <a href="herseysdatasizegame.html">Play Now</a>
+</div>
 
-        
-      </ul>
-    </section>
-  </main>
+</div>
 
-  <footer>
-    &copy; 2026 Mr Hersey &middot; Hosted on GitHub Pages
-  </footer>
+<div class="topic-grid">
+
+<div class="topic">
+    <h2>🌐 Networks</h2>
+    <ul>
+        <li><a href="gcse_networks_simulator.html">📡 Network Simulator</a></li>
+        <li><a href="https://net-build-go.base44.app" target="_blank">🔀 Switches & Routers</a></li>
+    </ul>
+</div>
+
+<div class="topic">
+    <h2>🔢 Data Representation</h2>
+    <ul>
+        <li><a href="herseysdatasizegame.html">🧮 Byte Battle</a></li>
+        <li><a href="herseysbinaryshiftbattle.html">🎯 Binary Shift Battle</a></li>
+        <li><a href="herseyshexbinarybattle.html">⚡ HEX Binary Battle</a></li>
+        <li><a href="https://hex-invader-d18b0d93.base44.app/" target="_blank">👾 HEX Invaders</a></li>
+        <li><a href="hex_den">🔤 HEX → Denary</a></li>
+        <li><a href="den_hex">🔠 Denary → HEX</a></li>
+    </ul>
+</div>
+
+<div class="topic">
+    <h2>💻 Programming Fundamentals</h2>
+    <ul>
+        <li><a href="Herseysscratchcard.html">📁 External Files</a></li>
+        <li><a href="div_mod_dash.html">➗ DIV & MOD Dash</a></li>
+        <li><a href="Hersey’s GCSE Arrays & Lists Dash.html">📚 Arrays & Lists</a></li>
+        <li><a href="Hersey’s GCSE Flowcharts Dash.html">🔀 Flowcharts</a></li>
+        <li><a href="Hersey’s GCSE Functions & Procedures Dash.html">⚙️ Functions</a></li>
+        <li><a href="https://www.sqlzoo.net/wiki/SQL_Tutorial" target="_blank">🗄 SQL Zoo</a></li>
+    </ul>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+    © 2026 Mr Hersey · Hosted on GitHub Pages
+</footer>
+
 </body>
 </html>
-```
